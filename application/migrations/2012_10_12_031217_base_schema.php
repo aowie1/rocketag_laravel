@@ -126,6 +126,13 @@ class Base_Schema {
 		// ENGINE = InnoDB
 		// DEFAULT CHARACTER SET = utf8;
 
+		Schema::create('categories_things_joins', function($table)
+		{
+		    $table->increments('id');
+		    $table->integer('users_id')->nullable();
+		    $table->integer('things_id');
+		    $table->integer('thing_categories_id');
+		});
 
 		// -- -----------------------------------------------------
 		// -- Table `categories_things_joins`
@@ -157,6 +164,14 @@ class Base_Schema {
 		// ENGINE = InnoDB
 		// DEFAULT CHARACTER SET = utf8;
 
+		Schema::create('user_suggestions', function($table)
+		{
+		    $table->increments('id');
+		    $table->integer('things_id1');
+		    $table->integer('things_id2');
+		    $table->integer('users_id');
+		    $table->boolean('originator')->nullable()->default(0);
+		});
 
 		// -- -----------------------------------------------------
 		// -- Table `user_suggestions`
@@ -191,6 +206,13 @@ class Base_Schema {
 		// ENGINE = InnoDB
 		// DEFAULT CHARACTER SET = utf8;
 
+		Schema::create('person_info', function($table)
+		{
+		    $table->increments('id');
+		    $table->integer('things_id');
+		    $table->date('birth_date');
+		    $table->string('birth_location', 200);
+		});
 
 		// -- -----------------------------------------------------
 		// -- Table `person_info`
@@ -210,6 +232,15 @@ class Base_Schema {
 		// ENGINE = InnoDB
 		// DEFAULT CHARACTER SET = utf8;
 
+		Schema::create('comments', function($table)
+		{
+		    $table->increments('id');
+		    $table->integer('users_id');
+		    $table->integer('name', 255);
+		    $table->timestamps();
+		    $table->string('comment', 150);
+		    $table->integer('thing_tags_joins_id');
+		});
 
 		// -- -----------------------------------------------------
 		// -- Table `comments`
