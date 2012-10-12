@@ -70,9 +70,9 @@ return array(
 		'mysql' => array(
 			'driver'   => 'mysql',
 			'host'     => 'localhost',
-			'database' => 'database',
+			'database' => 'rocketag_laravel',
 			'username' => 'root',
-			'password' => '',
+			'password' => 'rouser',
 			'charset'  => 'utf8',
 			'prefix'   => '',
 		),
