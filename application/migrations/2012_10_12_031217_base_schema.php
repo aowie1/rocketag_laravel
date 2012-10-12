@@ -30,6 +30,14 @@ class Base_Schema {
 		// ENGINE = InnoDB
 		// DEFAULT CHARACTER SET = utf8;
 
+		Schema::create('tags', function($table)
+		{
+		    $table->increments('id');
+		    $table->string('name', 255);
+			$table->timestamps();
+			$table->integer('created_users_id')->nullable();
+			$table->integer('modified_users_id')->nullable();
+		});
 
 
 		// -- -----------------------------------------------------
@@ -48,11 +56,22 @@ class Base_Schema {
 		// AUTO_INCREMENT = 11
 		// DEFAULT CHARACTER SET = utf8;
 
+		Schema::create('things_tags_joins', function($table)
+		{
+		    $table->increments('id');
+		    $table->integer('things_id');
+		    $table->boolean('originator')->nullable()->default($0);
+			$table->boolean('anonymous')->nullable()->default($0);
+			$table->timestamps();
+			$table->integer('tags_id');
+			$table->integer('users_id')->nullable();
+			$table->integer('tags_id1');
+		});
 
 		// -- -----------------------------------------------------
 		// -- Table `things_tags_joins`
 		// -- -----------------------------------------------------
-		// CREATE  TABLE IF NOT EXISTS `things_tags_joins` (
+		// CREATE  TABLE IF NOT EXISTS `tan(arg)hings_tags_joins` (
 		//   `id` INT(11) NOT NULL AUTO_INCREMENT ,
 		//   `things_id` INT(11) NOT NULL ,
 		//   `originator` TINYINT(1) NULL DEFAULT 0 ,
@@ -84,6 +103,11 @@ class Base_Schema {
 		// AUTO_INCREMENT = 6
 		// DEFAULT CHARACTER SET = utf8;
 
+		Schema::create('tags', function($table)
+		{
+		    $table->increments('id');
+		    $table->string('name', 255);
+		});
 
 
 		// -- -----------------------------------------------------
@@ -98,13 +122,21 @@ class Base_Schema {
 		// DEFAULT CHARACTER SET = utf8;
 
 
+		Schema::create('spectrum', function($table)
+		{
+		    $table->increments('id');
+		    $table->integer('value')->nullable();
+			$table->timestamps();
+			$table->integer('tags_id');
+			$table->integer('users_id');
+		});
 
 
 		// -- -----------------------------------------------------
 		// -- Table `spectrum`
 		// -- -----------------------------------------------------
 		// CREATE  TABLE IF NOT EXISTS `spectrum` (
-		//   `id` INT NOT NULL ,
+		//   `id` INT NOT NULL AUTO_INCREMENT ,
 		//   `value` INT NULL ,
 		//   `tags_id` INT(11) NOT NULL ,
 		//   `users_id` INT(11) NOT NULL ,
@@ -138,7 +170,7 @@ class Base_Schema {
 		// -- Table `categories_things_joins`
 		// -- -----------------------------------------------------
 		// CREATE  TABLE IF NOT EXISTS `categories_things_joins` (
-		//   `id` INT NOT NULL ,
+		//   `id` INT NOT NULL AUTO_INCREMENT ,
 		//   `users_id` INT(11) NULL ,
 		//   `things_id` INT(11) NOT NULL ,
 		//   `thing_categories_id` INT(11) NOT NULL ,
@@ -177,7 +209,7 @@ class Base_Schema {
 		// -- Table `user_suggestions`
 		// -- -----------------------------------------------------
 		// CREATE  TABLE IF NOT EXISTS `user_suggestions` (
-		//   `id` INT NOT NULL ,
+		//   `id` INT NOT NULL AUTO_INCREMENT ,
 		//   `things_id1` INT(11) NOT NULL ,
 		//   `things_id2` INT(11) NOT NULL ,
 		//   `users_id` INT(11) NOT NULL ,
@@ -241,6 +273,8 @@ class Base_Schema {
 		    $table->string('comment', 150);
 		    $table->integer('thing_tags_joins_id');
 		});
+
+
 
 		// -- -----------------------------------------------------
 		// -- Table `comments`
