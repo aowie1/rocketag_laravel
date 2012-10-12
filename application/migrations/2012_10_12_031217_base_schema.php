@@ -60,8 +60,8 @@ class Base_Schema {
 		{
 		    $table->increments('id');
 		    $table->integer('things_id');
-		    $table->boolean('originator')->nullable()->default($0);
-			$table->boolean('anonymous')->nullable()->default($0);
+		    $table->boolean('originator')->nullable()->default(0);
+			$table->boolean('anonymous')->nullable()->default(0);
 			$table->timestamps();
 			$table->integer('tags_id');
 			$table->integer('users_id')->nullable();
@@ -103,7 +103,7 @@ class Base_Schema {
 		// AUTO_INCREMENT = 6
 		// DEFAULT CHARACTER SET = utf8;
 
-		Schema::create('tags', function($table)
+		Schema::create('thing_categories', function($table)
 		{
 		    $table->increments('id');
 		    $table->string('name', 255);
@@ -268,7 +268,7 @@ class Base_Schema {
 		{
 		    $table->increments('id');
 		    $table->integer('users_id');
-		    $table->integer('name', 255);
+		    $table->string('name', 255);
 		    $table->timestamps();
 		    $table->string('comment', 150);
 		    $table->integer('thing_tags_joins_id');
