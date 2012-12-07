@@ -1,7 +1,7 @@
 <?php
-foreach($tag_results as $result)
+foreach($results as $result)
 {
 //dd($result->original['name']);
-	echo '<li>' . $result->value . '</li>';
+	echo '<li>' . $result->name . '</li>';
 }
 ?>

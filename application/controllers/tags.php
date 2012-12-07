@@ -1,26 +1,25 @@
 <?php
-
-class Tags_Controller extends Base_Controller
-{
-	/*
+/*
 	|--------------------------------------------------------------------------
 	| The Tags Controller
 	|--------------------------------------------------------------------------
 	*/
+class Tags_Controller extends Base_Controller
+{
 	public $restful = true;
 
 	public function get_index($name = false)
 	{
 
-		$data['result'] = Tag::get_tag($name);
-//dd($result);
-		if (!empty($data['result']))
-			return View::make('tags.result')->with($data);
+		$result = Tag::where('name', '=', $name)->first();
+
+		if (!is_null($result))
+			return View::make('tags.single')->with('result', $result);
 		else
 		{
-			$data['tag'] = Input::old('name') ?: ( !empty($name) ? $name : '');
+			$tag = Input::old('name') ?: ( !empty($name) ? $name : '');
 
-			return View::make('tags.add')->with($data);
+			return View::make('tags.add')->with('tag', $tag);
 		}
 	}
 
@@ -36,7 +35,7 @@ class Tags_Controller extends Base_Controller
 			{
 				//$data['tags_result'] = Thing::find($data['thing_result']->id)->tags()->take($limit)->get();
 
-				$data['tag_results'] = DB::table('tags')
+				$data['results'] = DB::table('tags')
 					->join('thing_tag', 'tags.id', '=', 'thing_tag.id')
 					->join('things', 'thing_tag.id', '=', 'things.id')
 					->join('spectrum', 'tags.id', '=', 'spectrum.tag_id')
@@ -45,7 +44,7 @@ class Tags_Controller extends Base_Controller
 					->where('spectrum.value', '<=', $end_spectrum)
 					->get(array('tags.name', 'spectrum.value'));
 //dd($data);
-				if (!empty($data['tag_results']))
+				if (!empty($data['results']))
 				{
 					if (isset($_SERVER['X_HTTP_REQUESTED_WITH']))
 						return json_decode($data);
@@ -81,16 +80,14 @@ class Tags_Controller extends Base_Controller
 
 	public function get_suggestions($tag = false, $num = false)
 	{
-		$data['tag'] = $tag;
-
 		if(empty($num))
-			$data['suggestive_results'] = Tag::get_suggestions($tag);
+			$results = Tag::get_suggestions($tag);
 		else
-			$data['suggestive_results'] = Tag::get_suggestions($tag, $num);
+			$results = Tag::get_suggestions($tag, $num);
 
-		if (!empty($data['suggestive_results']))
-			return View::make('tags.results')->with($data);
+		if (!is_null($results))
+			return View::make('tags.results')->with('results', $results);
 		else
-			return View::make('tags.add')->with($data);
+			return View::make('tags.add')->with('tag', $tag);
 	}
 }
