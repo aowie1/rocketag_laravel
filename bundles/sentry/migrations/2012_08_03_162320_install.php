@@ -20,7 +20,28 @@
 
 class Sentry_Install
 {
+	function __construct()
+	{
+		// This default password is "c0wbell!123"
+		$this->users = array(
+			array(
+				'username' 		=> 	'admin',
+				'email'			=>	'admin@rocketag.com',
+				'password'		=>	'iviAREaAKjinXDV2b7e2bbbebb7304ad940c5d6c709c086fa69218b23479c6271efe3d592d8edf1d',
+				'ip_address'	=> 	'127.0.0.1',
+				'status'		=>	1,
+				'activated'		=>	1,
+				'created_at'	=> 	date(DB::grammar()->grammar->datetime),
+				'updated_at'	=>	date(DB::grammar()->grammar->datetime)
+			)
+		);
 
+		$this->users_metadata = array(
+			'user_id'		=> '1',
+			'first_name'	=> 'Admin',
+			'last_name'		=> 'istrator'
+		);
+	}
 	/**
 	 * Make changes to the database.
 	 *
@@ -86,6 +107,13 @@ class Sentry_Install
 			$table->timestamp('suspended_at');
 			$table->timestamp('unsuspend_at');
 		});
+
+		foreach ($this->users as $user_row)
+		{
+			$id = DB::query('INSERT INTO users (`username`, `email`, `password`, `ip_address`, `status`, `activated`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', $user_row);
+			$this->users_metadata['user_id'] = $id;
+			DB::query('INSERT INTO users_metadata (`user_id`, `first_name`, `last_name`) VALUES (?, ?, ?)', $this->users_metadata);
+		}
 	}
 
 	/**
