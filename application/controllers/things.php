@@ -12,15 +12,15 @@ class Things_Controller extends Base_Controller
 	public function get_index($name = false)
 	{
 
-		$data['result'] = Thing::get_thing($name);
+		$thing = Thing::get_thing($name);
 //dd($result);
-		if (!empty($data['result']))
-			return View::make('things.result')->with($data);
+		if (!empty($thing))
+			return View::make('things.single')->with('thing', $thing);
 		else
 		{
-			$data['input_name'] = Input::old('name') ?: ( !empty($name) ? $name : '');
+			$thing_name = Input::old('name') ?: ( !empty($name) ? $name : '');
 
-			return View::make('things.add')->with($data);
+			return View::make('things.add')->with('thing_name', $thing_name);
 		}
 	}
 
@@ -53,13 +53,11 @@ class Things_Controller extends Base_Controller
 	public function get_suggestions($thing = false, $num = false)
 	{
 		if(empty($num))
-			$data['suggestive_results'] = Thing::get_suggestions($thing);
+			$suggestions = Thing::get_suggestions($thing);
 		else
-			$data['suggestive_results'] = Thing::get_suggestions($thing, $num);
+			$suggestions = Thing::get_suggestions($thing, $num);
 
-		if (!empty($data['suggestive_results']))
-			return View::make('things.results')->with($data);
-		else
-			return View::make('things.add')->with($data);
+		if (!empty($suggestions))
+			return View::make('things.suggestions')->with($suggestions);
 	}
 }

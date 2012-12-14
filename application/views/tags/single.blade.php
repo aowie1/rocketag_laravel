@@ -1,1 +1,1 @@
-This is tag: {{ $result->name }}
+This is tag: {{ $tag->name }}

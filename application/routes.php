@@ -38,24 +38,24 @@ Route::get('/', function()
 });
 
 // Tags
-Route::get('tag', 'tags@index'); // Add form
+Route::get('tag/(:any?)', 'tags@index'); // Add form
+Route::get('tags/(:any?)', 'tags@index'); // Add form
 //Route::get('tag[s]?/suggestions/(:any)', 'tags@suggestions');
-Route::get('tag/(:any)', 'tags@index');
-Route::get('tag[s]?/suggestions/(:any)/(:any?)', 'tags@suggestions');
-Route::post('tag/add', 'tags@add');
+Route::get('tag/suggestions/(:any)', 'tags@suggestions');
 
-// tags/{thing}/{num}/{start_spectrum}/{end_spectrum}/{is_fact}
-Route::get('tags/(:any?)/(:any?)/(:any?)/(:any?)/(:any?).*', 'tags@tags');
+Route::post('tag', 'tags@create');
+
+// // tags/{thing}/{num}/{start_spectrum}/{end_spectrum}/{is_fact}
+// Route::get('tags/(:any?)/(:any?)/(:any?)/(:any?)/(:any?).*', 'tags@tags');
 
 
-// Things
-Route::get('thing', 'things@index'); // Add form
-//Route::get('thing[s]?/suggestions/(:any)', 'things@suggestions');
-Route::get('thing/suggestions/(:any)[/(:any)]?', 'things@suggestions');
-Route::get('thing/(:any)', 'things@index');
-Route::post('thing/add', 'things@add');
+// // Things
+Route::get('thing[s]?', 'things@index'); // Add form
+// //Route::get('thing[s]?/suggestions/(:any)', 'things@suggestions');
+Route::get('thing[s]?/suggestions/(:any)[/(:any)]?', 'things@suggestions');
+Route::get('thing[s]?/(:any)', 'things@index');
 
-Route::get('things', 'things@index');
+Route::post('thing[s]?', 'things@index');
 
 /*
 |--------------------------------------------------------------------------

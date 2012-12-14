@@ -31,14 +31,13 @@ class Tag extends Eloquent
 		dd(func_get_args());
 	}
 
-	public static function insert()
+	public static function save_tag()
 	{
-		$data['name'] 		= 	Input::get('name');
-		$data['user_id']	=	1;
-		//dd($data);
-		Tag::create($data);
+		$tag = new Tag();
+		$tag->name = Input::get('name');
+		$tag->user_id	=	1;
 
-		return 'success!';
+		return $tag->save(); //returns 1 = success, 0 = failure
 	}
 
 	public static function get_suggestions($text = false, $num = 5)

@@ -25,7 +25,7 @@ class Thing extends Eloquent
 		dd(func_get_args());
 	}
 
-	public static function insert()
+	public static function post_create()
 	{
 		$data['name'] 		= 	Input::get('name');
 		$data['user_id']	=	1;

@@ -7,6 +7,7 @@
 class Tags_Controller extends Base_Controller
 {
 	public $restful = true;
+	public $layout = 'layouts.master';
 
 	public function get_index($name = false)
 	{
@@ -64,13 +65,11 @@ class Tags_Controller extends Base_Controller
 		return false; //thing wasnt passed
 	}
 
-	public function post_add()
+	public function post_create()
 	{
-		$tag = new Tag();
-		$tag->name = Input::get('name');
-		$tag->user_id	=	1;
-
-		echo $tag->save(); //returns 1 = success, 0 = failure
+		dd('blah');
+		$tag = save_tag();
+		echo $tag;
 	}
 
 	public function post_index()
@@ -81,13 +80,11 @@ class Tags_Controller extends Base_Controller
 	public function get_suggestions($tag = false, $num = false)
 	{
 		if(empty($num))
-			$results = Tag::get_suggestions($tag);
+			$suggestions = Tag::get_suggestions($tag);
 		else
-			$results = Tag::get_suggestions($tag, $num);
-
-		if (!is_null($results))
-			return View::make('tags.results')->with('results', $results);
-		else
-			return View::make('tags.add')->with('tag', $tag);
+			$suggestions = Tag::get_suggestions($tag, $num);
+dd($suggestions);
+		if (!is_null($suggestions))
+			return View::make('tags.suggestions')->with('suggestions', $suggestions);
 	}
 }
