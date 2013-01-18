@@ -39,4 +39,11 @@ return array(
 	'oneauth' => array('auto' => true),
 	'bundocs' => array('auto' => true, 'handles' => 'bundocs'),
 	'sentry' => array('auto' => true),
+    'aware' => array(
+      'autoloads' => array(
+        'map' => array(
+          'Aware' => '(:bundle)/model.php'
+        ),
+      )
+    ),
 );
