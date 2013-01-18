@@ -9,19 +9,38 @@ class Things_Controller extends Base_Controller
 	*/
 	public $restful = true;
 
-	public function get_index($name = false)
+	public function get_index()
 	{
+		return View::make('things.add');
+	}
 
-		$thing = Thing::get_thing($name);
-//dd($result);
-		if (!empty($thing))
-			return View::make('things.single')->with('thing', $thing);
-		else
-		{
-			$thing_name = Input::old('name') ?: ( !empty($name) ? $name : '');
+	public function post_create()
+	{
+		$thing = new Thing;
 
-			return View::make('things.add')->with('thing_name', $thing_name);
-		}
+		$tags = Input::get('tags');
+
+		if ($thing->create_thing()) {
+
+			if (!empty($tags)) {
+				$tag_ids = array_keys($tags);
+				$thing->tags()->sync($tag_ids);
+			}
+
+			$success = 'Your thing was successfully created!';
+
+			// Return to the same page with a success message
+	        return View::make('things.add')
+	            ->with('success', $success);
+	    } else {
+	    	$old_tags = (!empty($tags)) ? $tags : false;
+// dd($old_tags);
+	    	// Return to the same page with error messages
+	        return Redirect::to('/things')
+	        	->with('old_tags', $old_tags)
+                ->with_input()
+                ->with_errors($thing->errors);
+	    }
 	}
 
 	public function get_things($thing = false, $limit = 10, $start_spectrum = -10, $end_spectrum = 10, $is_fact = false)

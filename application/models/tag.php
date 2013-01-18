@@ -1,14 +1,13 @@
 <?php
 
-class Tag extends Eloquent
+class Tag extends Aware
 {
 	public static $table = 'tags';
 	public static $timestamps = true;
 
 	public function things()
 	{
-		$data['things'] = $this->has_many_and_belongs_to('Thing');
-
+		return $this->has_many_and_belongs_to('Thing', 'tag_thing');
 	}
 
 	public function spectrum()
@@ -31,20 +30,29 @@ class Tag extends Eloquent
 		dd(func_get_args());
 	}
 
-	public static function save_tag()
+	public function create_tag()
 	{
-		$tag = new Tag();
-		$tag->name = Input::get('name');
-		$tag->user_id	=	1;
+		$rules = array(
+			'name' => 'required|unique:'.Static::$table,
+			'user_id' => 'required|integer'
+		);
 
-		return $tag->save(); //returns 1 = success, 0 = failure
+		$this->name = Input::get('name');
+		$this->user_id =	1;//User::current_user_id();
+
+		return $this->save($rules);
 	}
 
-	public static function get_suggestions($text = false, $num = 5)
+	public function save_tag()
 	{
-		if (!empty($text))
-			return Tag::where('name', 'like', '%'.$text.'%')->take($num)->get();
-		else
-			return false;
+		$rules = array(
+			'name' => 'required|unique:'.Static::$table,
+			'user_id' => 'required|integer'
+		);
+
+		$this->name = Input::get('name');
+		$this->user_id =	1;//User::current_user_id();
+
+		return $this->save($rules);
 	}
 }

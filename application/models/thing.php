@@ -1,13 +1,13 @@
 <?php
 
-class Thing extends Eloquent
+class Thing extends Aware
 {
 	public static $table = 'things';
 	public static $timestamps = true;
 
 	public function tags()
 	{
-		return $this->has_many_and_belongs_to('Tag', 'thing_tag')->with('user_id')->with('originator')->with('anonymous');
+		return $this->has_many_and_belongs_to('Tag', 'tag_thing');
 	}
 
 	public static function get_all()
@@ -25,14 +25,30 @@ class Thing extends Eloquent
 		dd(func_get_args());
 	}
 
-	public static function post_create()
+	public function create_thing()
 	{
-		$data['name'] 		= 	Input::get('name');
-		$data['user_id']	=	1;
-		//dd($data);
-		Thing::create($data);
+		$rules = array(
+			'name' => 'required|unique:'.Static::$table,
+			'user_id' => 'required|integer'
+		);
 
-		return 'success!';
+		$this->name = Input::get('name');
+		$this->user_id =	1;//User::current_user_id();
+
+		return $this->save($rules);
+	}
+
+	public function update_thing()
+	{
+		$rules = array(
+			'name' => 'required|unique:'.Static::$table,
+			'user_id' => 'required|integer'
+		);
+
+		$this->name = Input::get('name');
+		$this->user_id =	1;//User::current_user_id();
+
+		return $this->save($rules);
 	}
 
 	public static function get_suggestions($text = false, $num = 5)

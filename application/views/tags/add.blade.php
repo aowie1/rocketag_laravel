@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="form">
-    This tag is not yet in our system, but feel free to add it!
+    <h1>Add a tag</h1>
 
     {{ Form::open('tag', 'POST') }}
-    {{ Form::text('name', @$tag) }}
+    <div class="msg"></div>
+    {{ Form::text('name', Input::old('name', '')) }}
     {{ Form::submit('add') }}
 </div>
 @endsection
-
