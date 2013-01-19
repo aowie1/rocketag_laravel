@@ -66,13 +66,22 @@ class Tags_Controller extends Base_Controller
 	{
 		$tag = new Tag;
 
-		if ($tag->create_tag()){
+		if ($tag->create_tag()) {
+
+			$spectrum_value = Input::get('spectrum');
+
+			if (!empty($spectrum_value)) {
+				$spectrum = new Spectrum;
+				$spectrum->create_spectrum($tag->id);
+			}
+
 			$success = 'Your tag was successfully created!';
 
 			// Return to the same page with a success message
 	        return View::make('tags.add')
 	            ->with('success', $success);
-	    }else{
+	    } else {
+
 	    	// Return to the same page with error messages
 	        return Redirect::to('/tags')
                 ->with_input()
