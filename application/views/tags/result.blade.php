@@ -1,2 +1,5 @@
-<div id="id-{{ $tag_id }}" rel="{{ $tag_id }}">{{ $tag_name }}</div>
-{{ Form::hidden('tags['. $tag_id .']', $tag_name) }}
+<div id="id-{{ $tag->id }}" rel="{{ $tag->id }}">
+    {{ $tag->name }}
+    <a href="/tag/{{ $tag->id }}/comment">comment</a>
+</div>
+{{ Form::hidden('tags['. $tag->id .']', $tag->name) }}

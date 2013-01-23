@@ -114,6 +114,18 @@ class Base_Schema {
 		    $table->foreign('tag_thing_id')->references('id')->on('tag_thing')->on_update('cascade')->on_delete('cascade');
 		});
 
+		Schema::create('images', function($table){
+			$table->increments('id');
+			$table->integer('thing_id');
+			$table->string('image', 255);
+			$table->integer('user_id');
+			$table->timestamps();
+			$table->integer('relevance');
+
+		    $table->foreign('user_id')->references('id')->on('users')->on_update('cascade')->on_delete('set null');
+			$table->foreign('thing_id')->references('id')->on('thing')->on_update('cascade')->on_delete('cascade');
+		});
+
 	}
 
 	/**
@@ -123,6 +135,11 @@ class Base_Schema {
 	 */
 	public function down()
 	{
+		Schema::table('images', function($table){
+			$table->drop_foreign('images_thing_id_foreign');
+			$table->drop_foreign('images_user_id_foreign');
+			$table->drop();
+		});
 
 		Schema::table('comments', function($table){
 			$table->drop_foreign('comments_tag_thing_id_foreign');

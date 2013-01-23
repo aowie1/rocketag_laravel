@@ -5,7 +5,7 @@
  * @return void
  */
 function display_messages(msg_object, type) {
-    var msg_json = jQuery.parseJSON(msg_object);
+    var msg_json = $.parseJSON(msg_object);
     var el;
 
     msg_container = $('.msg');

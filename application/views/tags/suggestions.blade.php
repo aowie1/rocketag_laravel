@@ -1,5 +1,5 @@
 @if (!empty($tags))
-    @foreach ($tags as $tag_id => $tag_name)
+    @foreach ($tags as $tag)
         <div class="suggestion-result-row">
             @include('tags.result')
         </div>

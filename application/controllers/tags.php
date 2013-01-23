@@ -35,7 +35,7 @@ class Tags_Controller extends Base_Controller
 //dd($data);
 				if (!empty($results))
 				{
-					if (isset($_SERVER['X_HTTP_REQUESTED_WITH']))
+					if (Request::ajax())
 						return json_decode($results);
 					else
 						return View::make('tags.results')
@@ -70,16 +70,21 @@ class Tags_Controller extends Base_Controller
 
 			$spectrum_value = Input::get('spectrum');
 
-			if (!empty($spectrum_value)) {
+			if (isset($spectrum_value)) {
 				$spectrum = new Spectrum;
 				$spectrum->create_spectrum($tag->id);
 			}
 
-			$success = 'Your tag was successfully created!';
+			if (Request::ajax()) {
+				return View::make('tags.result')
+					->with('tag', $tag);
+			} else {
+				$success = 'Your tag was successfully created!';
 
-			// Return to the same page with a success message
-	        return View::make('tags.add')
-	            ->with('success', $success);
+				// Return to the same page with a success message
+		        return View::make('tags.add')
+		            ->with('success', $success);
+	        }
 	    } else {
 
 	    	// Return to the same page with error messages
@@ -105,15 +110,10 @@ class Tags_Controller extends Base_Controller
 				if (!empty($exclude))
 					$q->where_not_in('id', $exclude);
 			})->take($num)->get();
-
-			if(!empty($tags)) {
-				foreach ($tags as $tag)
-					$parsed_tags[$tag->id] = $tag->name;
-			}
 		}
 
 // dd($parsed_tags);
 		if (!is_null($tags))
-			return View::make('tags.suggestions')->with('tags', $parsed_tags);
+			return View::make('tags.suggestions')->with('tags', $tags);
 	}
 }
