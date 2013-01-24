@@ -55,18 +55,16 @@ class Things_Controller extends Base_Controller
 			echo "No results found";
 	}
 
-	public function post_add()
+	public function get_show($thing_slug)
 	{
-		$thing = new Thing();
-		$thing->name = Input::get('name');
-		$thing->user_id	=	1;
+		$thing = Thing::with('tags')->where_slug($thing_slug)->first();
 
-		echo $thing->save(); //returns 1 = success, 0 = failure
-	}
-
-	public function post_index()
-	{
-		echo Thing::post_thing();
+		if (!is_null($thing)) {
+			return View::make('things.single')
+				->with('thing', $thing);
+		} else {
+			return Response::error('404');
+		}
 	}
 
 	public function get_suggestions($thing = false, $num = false)

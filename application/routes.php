@@ -38,26 +38,24 @@ Route::get('/', function()
 });
 
 // Tags
-Route::get('tag(s?)', 'tags@index'); // Add form
-// Route::get('tags', 'tags@index'); // Add form
-//Route::get('tag[s]?/suggestions/(:any)', 'tags@suggestions');
-Route::post('tag(s?)/suggestions', 'tags@suggestions');
-
-Route::post('tag(s?)', 'tags@create');
+Route::get('tag', 'tags@index'); // Add form
+Route::get('tag/(:any)', 'tags@show'); // Display Tag
+Route::post('tag/suggestions', 'tags@suggestions'); // Get suggestions based on string (optional: exclude filter)
+Route::post('tag', 'tags@create'); // Create a new tag
 // Route::get('tag/attach/(:num)', 'tags@attach');
 
-// // // tags/{thing}/{num}/{start_spectrum}/{end_spectrum}/{is_fact}
-// // Route::get('tags/(:any?)/(:any?)/(:any?)/(:any?)/(:any?).*', 'tags@tags');
+// tags/{thing}/{num}/{start_spectrum}/{end_spectrum}
+// Route::get('tags/(:any?)/(:any?)/(:any?)/(:any?)/(:any?).*', 'tags@tags');
 
 
-// // // Things
-Route::get('thing(s?)', 'things@index'); // Add form
-Route::post('thing(s?)', 'things@create');
-// Route::get('thing[s]?/suggestions/(:any)', 'things@suggestions');
-// Route::get('thing[s]?/suggestions/(:any)[/(:any)]?', 'things@suggestions');
-// Route::get('thing[s]?/(:any)', 'things@index');
+// Things
+Route::get('thing', 'things@index'); // Add form
+Route::get('thing/(:any)', 'things@show'); // Display thing
+Route::post('thing', 'things@create'); // Create a thing
 
-// Route::post('thing[s]?', 'things@index');
+// Comments
+Route::get('comments/(:num)', 'comments@index'); // Display comments based on relationship id
+Route::post('comments/(:num)', 'comments@create'); // Create a new comment on a relationship
 
 /*
 |--------------------------------------------------------------------------
