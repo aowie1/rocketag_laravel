@@ -9,11 +9,11 @@
         {{ Form::open('thing', 'POST') }}
         <div class="msg"></div>
 
-        {{ Form::text('name', Input::old('name')) }}
+        {{ Form::text('name', Input::old('name'), array('autocomplete' => 'off')) }}
         <br />
         @include('tags.attacher')
 
-        {{ Form::submit('add') }}
+        {{ Form::submit('add', array('class' => 'button')) }}
     </div>
     {{ Form::close() }}
 

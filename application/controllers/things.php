@@ -24,7 +24,12 @@ class Things_Controller extends Base_Controller
 
 			if (!empty($tags)) {
 				$tag_ids = array_keys($tags);
-				$thing->tags()->sync($tag_ids);
+
+				$static_vals = array(
+					'user_id' => 1 //User::current_user_id();
+				);
+
+				Utility::sync_with_static($thing, 'tags', $tag_ids, $static_vals);
 			}
 
 			$success = 'Your thing was successfully created!';
@@ -36,7 +41,7 @@ class Things_Controller extends Base_Controller
 	    	$old_tags = (!empty($tags)) ? $tags : false;
 // dd($old_tags);
 	    	// Return to the same page with error messages
-	        return Redirect::to('/things')
+	        return Redirect::to('/thing')
 	        	->with('old_tags', $old_tags)
                 ->with_input()
                 ->with_errors($thing->errors);

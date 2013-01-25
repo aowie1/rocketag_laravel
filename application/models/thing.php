@@ -27,14 +27,13 @@ class Thing extends Aware
 
 	public function check_slug($slug)
 	{
-		return static::where_slug()->first();
+		return self::where_slug($slug)->first();
 	}
 
 	public function create_thing()
 	{
 		$rules = array(
-			'name' => 'required|unique:'.Static::$table,
-			'slug' => 'required|alpha_dash',
+			'name' => 'required|unique:'.self::$table,
 			'user_id' => 'required|integer'
 		);
 
@@ -53,6 +52,7 @@ class Thing extends Aware
 		$this->name = Input::get('name');
 		$this->slug = $slug;
 		$this->user_id =	1;//User::current_user_id();
+
 
 		return $this->save($rules);
 	}
