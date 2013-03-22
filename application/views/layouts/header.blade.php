@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/css/ui-lightness/jquery-ui-1.10.0.custom.min.css" />
     <link rel="stylesheet" type="text/css" href="/vendors/foundation-4.0.4/css/foundation.css" />
     <link rel="stylesheet" type="text/css" href="/vendors/foundation-4.0.4/css/layout.css" />
+    <link rel="icon" type="image/ico" href="/vendors/foundation-4.0.4/img/favicon.ico"/>
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,600' rel='stylesheet' type='text/css'>
 </head>
 
