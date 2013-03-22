@@ -8,6 +8,7 @@
 @section('js')
     @parent
     <script>
+    jQuery(document).ready(function ($) {
         $('.add-tag-form').submit(function(e){
             // Post and save the tag
             $.ajax({
@@ -22,5 +23,6 @@
 
             return false;
         });
+    });
     </script>
 @endsection
