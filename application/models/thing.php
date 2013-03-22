@@ -38,7 +38,7 @@ class Thing extends Aware
 		);
 
 		// Convert the name to a slug
-		$slug = Str::slug(Input::get('name'));
+		$slug = Str::slug(Input::get('thing_name'));
 
 		// Check to make sure the slug is unique
 		// If not, increment the tail
@@ -49,7 +49,7 @@ class Thing extends Aware
 		       $i++;
 		}
 
-		$this->name = Input::get('name');
+		$this->name = Input::get('thing_name');
 		$this->slug = $slug;
 		$this->user_id =	1;//User::current_user_id();
 

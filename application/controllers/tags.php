@@ -104,12 +104,17 @@ class Tags_Controller extends Base_Controller
 		$tag = Input::get('str');
 		$num = Input::get('num');
 		$exclude = Input::get('exclude');
+		$exact = Input::get('exact');
 
 		if(!empty($tag)) {
-			$tags = Tag::where('name', 'like', '%'.$tag.'%')->where(function($q) use ($exclude) {
-				if (!empty($exclude))
-					$q->where_not_in('id', $exclude);
-			})->take($num)->get();
+			if (!$exact) {
+				$tags = Tag::where('name', 'like', '%'.$tag.'%')->where(function($q) use ($exclude) {
+					if (!empty($exclude))
+						$q->where_not_in('id', $exclude);
+				})->take($num)->get();
+			} else {
+				$tags = Tag::where_name($tag)->get();
+			}
 		}
 
 // dd($parsed_tags);

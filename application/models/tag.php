@@ -37,7 +37,7 @@ class Tag extends Aware
 			'user_id' => 'required|integer'
 		);
 
-		$this->name = Input::get('name');
+		$this->name = Input::get('tag_name');
 		$this->user_id =	1;//User::current_user_id();
 
 		return $this->save($rules);

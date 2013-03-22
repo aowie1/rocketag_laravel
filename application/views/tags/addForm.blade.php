@@ -3,12 +3,12 @@
 
     <div class="msg"></div>
 
-    {{ Form::label('name', 'Name') }}<br />
-    {{ Form::text('name', Input::old('name'), array('class' => 'add-tag-name-field')) }}
+    {{ Form::label('tag_name', 'Name') }}
+    {{ Form::text('tag_name', Input::old('tag_name'), array('class' => 'add-tag-name-field')) }}
 
     @include('spectrum.widget')
-
-    {{ Form::submit('add') }}
+    <br />
+    {{ Form::submit('Create', array('class' => 'button')) }}
 
     {{ Form::close() }}
 </div>

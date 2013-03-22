@@ -4,14 +4,10 @@
     {{ Form::open('thing', 'POST', array('class' => 'add-thing-form')) }}
     <div class="form">
         <h1>Add a thing</h1>
-
-        {{ Form::label('thing', 'Thing') }}
-        {{ Form::open('thing', 'POST') }}
+        {{ Form::label('thing_name', 'Thing') }}
         <div class="msg"></div>
 
-        {{ Form::text('name', Input::old('name'), array('autocomplete' => 'off')) }}
-        <br />
-        @include('tags.attacher')
+        {{ Form::text('thing_name', Input::old('thing_name'), array('autocomplete' => 'off')) }}
 
         {{ Form::submit('add', array('class' => 'button')) }}
     </div>

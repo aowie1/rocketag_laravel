@@ -11,38 +11,48 @@ class Things_Controller extends Base_Controller
 
 	public function get_index()
 	{
-		return View::make('things.add');
+		$old_tags = Input::old('tags');
+
+		if (!empty($old_tags)) {
+			$tag_ids = array_keys($old_tags);
+
+			$tags = Tag::where_in('id', $tag_ids)->get();
+		} else {
+			$tags = false;
+		}
+
+		return View::make('things.add')
+			->with('tags', $tags);
 	}
 
 	public function post_create()
 	{
 		$thing = new Thing;
 
-		$tags = Input::get('tags');
+		// $tags = Input::get('tags');
 
 		if ($thing->create_thing()) {
 
-			if (!empty($tags)) {
-				$tag_ids = array_keys($tags);
+			// if (!empty($tags)) {
+			// 	$tag_ids = array_keys($tags);
 
-				$static_vals = array(
-					'user_id' => 1 //User::current_user_id();
-				);
+			// 	$static_vals = array(
+			// 		'user_id' => 1 //User::current_user_id();
+			// 	);
 
-				Utility::sync_with_static($thing, 'tags', $tag_ids, $static_vals);
-			}
+			// 	Utility::sync_with_static($thing, 'tags', $tag_ids, $static_vals);
+			// }
 
 			$success = 'Your thing was successfully created!';
 
 			// Return to the same page with a success message
-	        return View::make('things.add')
+	        return Redirect::to('/thing/'.$thing->name)
 	            ->with('success', $success);
 	    } else {
-	    	$old_tags = (!empty($tags)) ? $tags : false;
-// dd($old_tags);
+	    	$old_tags = !empty($tags) ? $tags : false;
+ // dd($old_tags);
 	    	// Return to the same page with error messages
 	        return Redirect::to('/thing')
-	        	->with('old_tags', $old_tags)
                 ->with_input()
                 ->with_errors($thing->errors);
 	    }

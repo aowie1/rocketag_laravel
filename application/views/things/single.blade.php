@@ -3,32 +3,33 @@
 @section('content')
     <h1>{{ $thing->name }}</h1>
 
-    <h2>Tags</h2>
-    <div class="panel">
+    <h3>Tags</h3>
+    {{ Form::open('/thing/save', 'POST', array('class' => 'save-thing-form')) }}
+    <div class="panel attached-container">
     @forelse ($thing->tags as $tag)
         @include('tags.result')
     @empty
-        No tags exist currently for this thing.
+        <div class="empty-msg">No tags exist currently for this thing.</div>
     @endforelse
+        <div class="clear"></div>
     </div>
 
-    <a href="#" class="button" id="tag-attacher-button" data-reveal-id="tag-attacher-modal">Attach tags</a>
-
-    <div id="tag-attacher-modal" class="reveal-modal">
-        {{ Form::open('tag', 'POST', array('class' => 'add-tag-form')) }}
-            @include('tags.attacher')
-
-            {{ Form::submit('Attach', array('class' => 'button')) }}
-        {{ Form::close() }}
+    <div id="tag-attacher" class="hidden">
+        @include('tags.attacher')
     </div>
+
+    <div>
+        {{ Form::submit('Save', array('class' => 'button')) }}
+        <a href="#" class="button" id="tag-attacher-button" data-switch-id="tag-attacher">Attach tags</a>
+    </div>
+
+    {{ Form::close() }}
 @endsection
 
 @section('js')
-<script>
-    $(function(){
-        $('#tag-attacher-button').click(function(){
-            $('#tag-attacher-modal').reveal();
-        });
-    });
-</script>
+    <script>
+        // $('#tag-attacher-button').on('click', function(){
+        //     console.log($(this));
+        // });
+    </script>
 @endsection

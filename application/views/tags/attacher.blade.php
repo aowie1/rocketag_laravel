@@ -1,58 +1,79 @@
 <div class="suggest">
-    {{ Form::label('tag', 'Tag') }}
-    <div class="attached">
+    <div class=" ten columns">
+        <div id="tag-name-field-container">
+            {{ Form::label('tag-name', 'Add a tag:', array('id' => 'tag-name', 'class' => 'form-label left')) }} <a href="#" class="helper right" rel="tag-attacher-helper">What's this?</a>
+            <ol id="tag-attacher-helper" class="hidden"><li data-id"tag-name-field-container" data-options="tipLocation:top;tipAnimation:fade">You can create brand new tags here, or just attach existing ones. Try it now!</li></ol>
+        </div>
+        <!-- <div class="attached">
+            @if (!empty($tags))
+                @foreach ($tags as $tag)
+                    @include('tags.result')
+                @endforeach
+            @endif
+        </div> -->
 
-        @if (!empty($old_tags))
-            {{ dd($old_tags) }}
-            @foreach ($old_tags as $tag_id => $tag_name)
-                @include('tags.result')
-            @endforeach
-        @endif
+        {{ Form::text('tag_name', null, array('id' => 'tag-name', 'rel' => 'tag', 'autocomplete' => 'off', 'class' => 'tag-name-field suggest-field')) }}
+
+        <div class="results-panel hidden">
+            <label class="form-label">Suggestions:</label>
+            <div class="results-container">
+                <div class="clear"></div>
+            </div>
+        </div>
     </div>
-    {{ Form::text('tag', null, array('id' => 'tags', 'rel' => 'tag', 'autocomplete' => 'off', 'class' => 'tag-name-field suggest-field')) }}
-    <div class="results"></div>
+
+    <div class="button two columns switch-back">Okay, I'm Done.</div>
 </div>
 
+@section('modal')
+    @include('tags.addModal')
+@endsection
+
 @section('js')
+    @parent
     <script>
-    function get_suggestions(data) {
-        var suggestions = false;
+    jQuery(document).ready(function ($) {
+        function get_suggestions(data) {
+            var suggestions = false;
 
-        $.ajax({
-            async: false,
-            type: 'POST',
-            url: '/'+suggest_field.attr('rel')+'/suggestions',
-            data: data,
-            success: function(ret) {
-                if (ret !== '') {
-                    suggestions = ret;
+            $.ajax({
+                async: false,
+                type: 'POST',
+                url: '/'+suggest_field.attr('rel')+'/suggestions',
+                data: data,
+                success: function(ret) {
+                    if (ret !== '') {
+                        suggestions = ret;
+                    }
                 }
-            }
-        });
+            });
 
-        return suggestions;
-    }
-
-    function attach(ret) {
-        suggest_container = $('.suggest');
-        suggest_field = suggest_container.find('input.suggest-field');
-
-        suggest_field.val('');
-        if (ret !== '') {
-            suggest_container.find('.attached').append(ret);
-            $('#add-tag-modal').trigger('reveal:close');
+            return suggestions;
         }
-    }
 
-    function move_to_attached(el) {
-        suggest_container.find('.attached').append(el);
+        function check_contents() {
+            if (attached_container.find('.tag').length >= 1) {
+                $('.empty-msg').addClass('hidden');
+            } else if (attached_container.find('.empty-msg').hasClass('hidden')) {
+                $('.empty-msg').removeClass('hidden');
+            }
+        }
 
-        results_container.empty();
+        function move_to_attached(el) {
+            attached_container.prepend(el);
 
-        suggest_field.val('');
-    }
+            empty_results();
 
-    $(function(){
+            suggest_field.val('');
+
+            check_contents();
+        }
+
+        function empty_results() {
+            results_container.find('.tag').remove();
+            results_panel.hide();
+        }
+
         /**
          * Attach suggestive functionality to textbox
          * id => use the table name, rel => root path to set of methods, "/suggestions" will automatically be appended where needed
@@ -62,7 +83,9 @@
 
         suggest_container = $('.suggest');
         suggest_field = suggest_container.find('input.suggest-field');
-        results_container = suggest_container.find('.results');
+        results_panel = suggest_container.find('.results-panel');
+        results_container = results_panel.find('.results-container');
+        attached_container = $('.attached-container');
 
         suggest_field.on('keypress', function(e) {
 
@@ -72,50 +95,58 @@
             var keycode = (event.keyCode ? event.keyCode : event.which);
 
             // Look for suggestions
-            // If anything but the Enter key was pushed
-            if ($(this).val().length > 1 && keycode != '13') {
-                data.exclude = [];
+            // If anything but the Enter key was pressed
+            if($(this).val().length > 1) {
+                // If Enter key was pressed
+                if (keycode == '13') {
+                    e.preventDefault();
 
-                $.each(suggest_container.find('.attached input'), function(i, el) {
-                    data.exclude[i] = $(el).val();
-                });
+                    data.exact = true;
 
-                results_container.empty();
+                    results = get_suggestions(data);
 
-                suggestions = get_suggestions(data);
+                    add_modal = $('#add-tag-modal');
 
-                results_container.html(suggestions).show();
-            }
+                    // Ask to create the entry if it doesnt already exist
+                    if (!results) {
+                        $('.add-tag-name-field').val(data.str);
+                        add_modal.reveal();
 
-            // Create the entry if it doesnt already exist
+                        suggest_field.val($('.tag-name-field').val());
+                    } else {
+                        move_to_attached(results);
+                        add_modal.trigger('reveal:close');
+                    }
+                }
+                else { // If any key other than Enter key was pressed
+                    data.exclude = [];
 
-            // If Enter key was pushed
-            else if(keycode == '13') {
-                e.preventDefault();
+                    $.each(attached_container.find('input'), function(i, el) {
+                        data.exclude[i] = $(el).val();
+                    });
 
-                data.exact = true;
+                    empty_results();
 
-                results = get_suggestions(data);
+                    suggestions = get_suggestions(data);
 
-                if (!results) {
-                    $("#add-tag-modal").reveal();
-
-                    $('.add-tag-name-field').val($('.tag-name-field').val());
-                } else {
-                    move_to_attached(results);
+                    if (suggestions) {
+                        results_container.prepend(suggestions);
+                        results_panel.slideDown();
+                    }
                 }
             }
         });
 
-        suggest_container.on('click', '.suggestion-result-row', function() {
+        suggest_container.on('click', '.result-item', function() {
             move_to_attached($(this));
         });
 
-        suggest_container.on('click', '.attached-remove', function() {
+        attached_container.on('click', '.attached-remove', function() {
             $(this).parent().remove();
+
+            check_contents();
         });
         /* end suggest functionality */
-
     });
     </script>
 @endsection
