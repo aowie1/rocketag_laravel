@@ -57,19 +57,6 @@ class Thing extends Aware
 		return $this->save($rules);
 	}
 
-	public function update_thing()
-	{
-		$rules = array(
-			'name' => 'required|unique:'.Static::$table,
-			'user_id' => 'required|integer'
-		);
-
-		$this->name = Input::get('name');
-		$this->user_id =	1;//User::current_user_id();
-
-		return $this->save($rules);
-	}
-
 	public static function get_suggestions($text = false, $num = 5)
 	{
 		if (!empty($text))

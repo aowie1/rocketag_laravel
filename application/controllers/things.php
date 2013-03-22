@@ -92,4 +92,29 @@ class Things_Controller extends Base_Controller
 		if (!empty($suggestions))
 			return View::make('things.suggestions')->with($suggestions);
 	}
+
+	public function put_update($thing_name)
+	{
+		$thing = Thing::where_name($thing_name)->first();
+
+		if (Input::has('tags'))
+		{
+			$tag_ids = Input::get('tags');
+
+			$status_arr[] = $thing->tags()->sync($tag_ids);
+		}
+
+		if (in_array(FALSE, $status_arr))
+		{
+            return Redirect::to(Request::uri())
+                ->with_input()
+                ->with_errors($thing->errors);
+        }
+        else
+        {
+            // Redirect to the edit page with a message that says saving was successful
+            return Redirect::to(Request::uri())
+                ->with('success', 'Thing saved successfully.');
+        }
+	}
 }

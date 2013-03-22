@@ -4,7 +4,13 @@
     <h1>{{ $thing->name }}</h1>
 
     <h3>Tags</h3>
-    {{ Form::open('/thing/save', 'POST', array('class' => 'save-thing-form')) }}
+    {{ Form::open(Request::uri(), 'PUT', array('class' => 'save-thing-form')) }}
+    @if (!empty($success))
+        <div class="alert-box success">{{ $success }}</div>
+    @endif
+    @if (!empty($error))
+        <div class="alert-box error">{{ $error }}</div>
+    @endif
     <div class="panel attached-container">
     @forelse ($thing->tags as $tag)
         @include('tags.result')

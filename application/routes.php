@@ -52,6 +52,7 @@ Route::post('tag', 'tags@create'); // Create a new tag
 Route::get('thing', 'things@index'); // Add form
 Route::get('thing/(:any)', 'things@show'); // Display thing
 Route::post('thing', 'things@create'); // Create a thing
+Route::put('thing/(:any)', 'things@update'); // Display thing
 
 // Comments
 Route::get('comments/(:num)', 'comments@index'); // Display comments based on relationship id
