@@ -26,28 +26,10 @@
     @endif
 jQuery(document).ready(function ($) {
     $('a.helper').on('click', function(e){
-        // $('#' + $(this).attr('rel')).joyride({
-        //   'tipLocation': 'bottom',         // 'top' or 'bottom' in relation to parent
-        //   'nubPosition': 'auto',
-        // });
-    });
-
-    $('#tag-attacher-button').on('click', function(){
-        //$(this).parent().hide();
-
-        original = $(this).parent();
-        switch_to = $(this).attr('data-switch-id');
-        switch_to_el = $('#' + switch_to);
-
-
-        switch_to_el.show('fast', function(){
-            $('.switch-back').on('click', function(){
-                switch_to_el.hide();
-                original.show();
-            });
+        $('#' + $(this).attr('rel')).joyride({
+          'tipLocation': 'bottom',         // 'top' or 'bottom' in relation to parent
+          'nubPosition': 'auto',
         });
-
-        return true;
     });
 });
 </script>

@@ -27,6 +27,7 @@
     <div>
         {{ Form::submit('Save', array('class' => 'button')) }}
         <a href="#" class="button" id="tag-attacher-button" data-switch-id="tag-attacher">Attach tags</a>
+        <a href="#" class="button" id="link-attacher-button" data-switch-id="link-attacher">Attach link</a>
     </div>
 
     {{ Form::close() }}
@@ -34,8 +35,23 @@
 
 @section('js')
     <script>
-        // $('#tag-attacher-button').on('click', function(){
-        //     console.log($(this));
-        // });
+        jQuery(document).ready(function ($) {
+            $('#tag-attacher-button').on('click', function(){
+                $(this).parent().hide();
+
+                original = $(this).parent();
+                switch_to = $(this).attr('data-switch-id');
+                switch_to_el = $('#' + switch_to);
+
+                switch_to_el.show('fast', function(){
+                    $('.switch-back').on('click', function(){
+                        switch_to_el.hide();
+                        original.show();
+                    });
+                });
+
+                return true;
+            });
+        });
     </script>
 @endsection
