@@ -26,8 +26,8 @@
 
     <div>
         {{ Form::submit('Save', array('class' => 'button')) }}
-        <a href="#" class="button" id="tag-attacher-button" data-switch-id="tag-attacher">Attach tags</a>
-        <a href="#" class="button" id="link-attacher-button" data-switch-id="link-attacher">Attach link</a>
+        <a href="#" class="button js-attacher-button" data-switch-id="tag-attacher">Attach tags</a>
+        <a href="#" class="button js-attacher-button" data-switch-id="link-attacher">Attach link</a>
     </div>
 
     {{ Form::close() }}
@@ -36,7 +36,7 @@
 @section('js')
     <script>
         jQuery(document).ready(function ($) {
-            $('#tag-attacher-button').on('click', function(){
+            $('.js-attacher-button').on('click', function(){
                 $(this).parent().hide();
 
                 original = $(this).parent();
