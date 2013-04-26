@@ -3,7 +3,7 @@
     <div id="footer" class="width">
 
         <div id="footer_left">
-            <p>Copyright 2012</p>
+            <p>&copy; Copyright 2013</p>
         </div>
 
         <div id="footer_right">

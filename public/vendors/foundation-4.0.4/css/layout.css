@@ -1,10 +1,11 @@
-body{background: #fff url(images/bg.png) no-repeat center 140px ; color: #555; font-family: Verdana, sans-serif; }
+body{background: #fff url(../img/bg.png) no-repeat center 140px ; color: #555; font-family: Verdana, sans-serif; }
 p{font-size: 12px;}
 *{margin: 0;}
 
 h1, h2, h3, h4, h5, h6, h7 { color: #164d5d; font-family: 'Titillium Web', sans-serif;}
 
 a {color: #DF5100;}
+ul, ol{list-style-type: none;}
 
 a:hover {text-decoration: underline;}
 
@@ -15,14 +16,17 @@ a:hover {text-decoration: underline;}
 
 #header {margin-top: 25px;}
 
-#footer {padding: 15px 15px 30px 15px; background: #DF5100; color: #fff; margin-top: 15px;}
+#footer {padding: 10px 15px 30px 15px; background: #DF5100; color: #fff; margin-top: 15px;}
 #footer a {color: #333;}
 #footer_left {float: left;}
 #footer_right {float: right;}
 
-.col-1{width: 195px; background: #2E9BBC; height: 125px; overflow: hidden; margin-top: 60px; padding: 15px 0 0 25px; -moz-border-radius-topleft: 10px; -moz-border-radius-bottomleft: 10px; border-radius-topleft: 10px; border-radius-bottomleft: 10px; -webkit-border-top-left-radius: 10px; -webkit-border-bottom-left-radius: 10px;}
-.col-2{width: 400px; position: relative; background: #2E9BBC; height: 540px; padding: 15px 25px;width: 430px;  -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; /* future proofing */ -khtml-border-radius: 10px; /* for old Konqueror browsers */ margin-bottom: 15px; color: #fff;}
-.col-3{width: 315px; margin-top: 50px; background: #2E9BBC; height: 420px; -moz-border-radius-topright: 10px; -moz-border-radius-bottomright: 10px; border-radius-topright: 10px; border-radius-bottomright: 10px; -webkit-border-top-right-radius: 10px; -webkit-border-bottom-right-radius: 10px;}
+.col-1{width: 195px; background: #2E9BBC; height: 125px; overflow: hidden; margin-top: 60px; padding: 10px 0 0 15px; -moz-border-radius-topleft: 10px; -moz-border-radius-bottomleft: 10px; border-radius-topleft: 10px; border-radius-bottomleft: 10px; -webkit-border-top-left-radius: 10px; -webkit-border-bottom-left-radius: 10px; }
+.col-1 a{color: #fff;}
+.col-2{width: 400px; position: relative; background: #2E9BBC; min-height: 540px; height: auto; padding: 15px 25px;width: 430px;  -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; /* future proofing */ -khtml-border-radius: 10px; /* for old Konqueror browsers */ margin-bottom: 15px; color: #fff;}
+.col-3{width: 315px; margin-top: 50px; height: 420px; -moz-border-radius-topright: 10px; -moz-border-radius-bottomright: 10px; border-radius-topright: 10px; border-radius-bottomright: 10px; -webkit-border-top-right-radius: 10px; -webkit-border-bottom-right-radius: 10px;}
+.col-3 h2 {background: url(../img/cloud_blue.png) no-repeat top left; height: 49px; padding: 20px 0 0 38px; -moz-border-radius-bottomright: -10px; border-radius-bottomright: -10px; -webkit-border-bottom-right-radius: -10px; font-size: 20px; text-transform: uppercase; margin-bottom: 0; margin-top: 0;}
+.col-3 .content{background: #2E9BBC; height: 420px; -moz-border-radius-topright: 10px; -moz-border-radius-bottomright: 10px; border-radius-topright: 10px; border-radius-bottomright: 10px; -webkit-border-top-right-radius: 10px; -webkit-border-bottom-right-radius: 10px;}
 
 .lt {float: left;}
 .rt {float: right;}
@@ -55,3 +59,10 @@ a:hover {text-decoration: underline;}
 .results-container .attached-remove {
     display: none;
 }
+
+.button{background: #DF5100; border-color: #c54801;}
+.button:focus, .button:hover{ background:#ad4001;}
+
+.panel{color: #777;}
+
+#rocket{height: 147px; width: 89px; background: url(../img/rocket.png) no-repeat top left; position: absolute; z-index: 9999;top:455px; left: 370px;}

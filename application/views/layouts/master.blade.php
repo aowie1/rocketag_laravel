@@ -13,9 +13,15 @@
 
     <div class="lt col-2">
         @yield('content')
+
+        <div id="rocket"></div>
     </div>
 
     <div class="rt col-3">
+        <h2>Images</h2>
+        <div class="content">
+
+        </div>
 
     </div>
 
