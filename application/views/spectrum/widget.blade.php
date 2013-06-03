@@ -3,7 +3,7 @@
 <div id="spectrum-slider"></div>
 
 <script>
-    spectrum_field = $('#spectrum');
+    //spectrum_field = $('#spectrum');
     // $( "#spectrum-slider" ).slider({
     //   value: spectrum_field.val(),
     //   min: -10,

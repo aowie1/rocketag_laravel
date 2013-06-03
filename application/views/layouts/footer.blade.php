@@ -24,15 +24,18 @@
     @if (!empty($success))
         //display_messages('{{ json_encode($success) }}', 'success');
     @endif
-jQuery(document).ready(function ($) {
-    $('a.helper').on('click', function(e){
-        $('#' + $(this).attr('rel')).joyride({
-          'tipLocation': 'bottom',         // 'top' or 'bottom' in relation to parent
-          'nubPosition': 'auto',
+
+    jQuery(document).ready(function ($) {
+        $('a.helper').on('click', function(e){
+            $('#' + $(this).attr('rel')).joyride({
+              'tipLocation': 'bottom',         // 'top' or 'bottom' in relation to parent
+              'nubPosition': 'auto',
+            });
         });
     });
-});
 </script>
+
+<script src="/js/suggestive.js"></script>
 
 @yield('js')
 

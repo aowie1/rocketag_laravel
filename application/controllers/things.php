@@ -1,12 +1,11 @@
 <?php
-
+/*
+|--------------------------------------------------------------------------
+| The Things Controller
+|--------------------------------------------------------------------------
+*/
 class Things_Controller extends Base_Controller
 {
-	/*
-	|--------------------------------------------------------------------------
-	| The Things Controller
-	|--------------------------------------------------------------------------
-	*/
 	public $restful = true;
 
 	public function get_index()
@@ -32,7 +31,6 @@ class Things_Controller extends Base_Controller
 		// $tags = Input::get('tags');
 
 		if ($thing->create_thing()) {
-
 			// if (!empty($tags)) {
 			// 	$tag_ids = array_keys($tags);
 
@@ -46,11 +44,9 @@ class Things_Controller extends Base_Controller
 			$success = 'Your thing was successfully created!';
 
 			// Return to the same page with a success message
-	        return Redirect::to('/thing/'.$thing->name)
+	        return Redirect::to('/thing/'.$thing->slug)
 	            ->with('success', $success);
 	    } else {
-	    	$old_tags = !empty($tags) ? $tags : false;
- // dd($old_tags);
 	    	// Return to the same page with error messages
 	        return Redirect::to('/thing')
                 ->with_input()
@@ -72,7 +68,7 @@ class Things_Controller extends Base_Controller
 
 	public function get_show($thing_slug)
 	{
-		$thing = Thing::with('tags')->where_slug($thing_slug)->first();
+		$thing = Thing::with(array('tags', 'links'))->where_slug($thing_slug)->first();
 
 		if (!is_null($thing)) {
 			return View::make('things.single')
@@ -84,7 +80,7 @@ class Things_Controller extends Base_Controller
 
 	public function get_suggestions($thing = false, $num = false)
 	{
-		if(empty($num))
+		if (empty($num))
 			$suggestions = Thing::get_suggestions($thing);
 		else
 			$suggestions = Thing::get_suggestions($thing, $num);
@@ -93,28 +89,21 @@ class Things_Controller extends Base_Controller
 			return View::make('things.suggestions')->with($suggestions);
 	}
 
-	public function put_update($thing_name)
+	public function put_update($thing_slug)
 	{
-		$thing = Thing::where_name($thing_name)->first();
+		$thing = Thing::where_slug($thing_slug)->first();
+
+		$status_arr = array();
 
 		if (Input::has('tags'))
 		{
 			$tag_ids = Input::get('tags');
 
-			$status_arr[] = $thing->tags()->sync($tag_ids);
+			$thing->tags()->sync($tag_ids);
 		}
 
-		if (in_array(FALSE, $status_arr))
-		{
-            return Redirect::to(Request::uri())
-                ->with_input()
-                ->with_errors($thing->errors);
-        }
-        else
-        {
-            // Redirect to the edit page with a message that says saving was successful
-            return Redirect::to(Request::uri())
-                ->with('success', 'Thing saved successfully.');
-        }
+        // Redirect to the edit page with a message that says saving was successful
+        return Redirect::to(Request::uri())
+            ->with('success', 'Thing saved successfully.');
 	}
 }

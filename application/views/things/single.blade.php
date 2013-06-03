@@ -5,14 +5,9 @@
     <h1>{{ $thing->name }}</h1>
 
     <h3>Tags</h3>
-    @if (!empty($success))
-        <div class="alert-box success">{{ $success }}</div>
-    @endif
-    @if (!empty($error))
-        <div class="alert-box error">{{ $error }}</div>
-    @endif
+    @include('success_handler')
 
-    <div class="panel attached-container">
+    <div id="container-attached-tag" class="panel container-attached" data-type="tag">
     @forelse ($thing->tags as $tag)
         @include('tags.result')
     @empty
@@ -26,7 +21,7 @@
     </div>
 
     <div class="right">
-        <a href="#" class="button js-attacher-button" data-switch-id="tag-attacher">Attach tags</a>
+        <a href="#tag-name" class="button js-attacher-button" data-switch-id="tag-attacher">Attach tags</a>
     </div>
 
     <hr />
@@ -59,6 +54,8 @@
 
     <hr />
 
+    @include('errors_handler')
+
     {{ Form::submit('Save', array('class' => 'button')) }}
 
     {{ Form::close() }}
@@ -82,6 +79,12 @@
                 });
 
                 return true;
+            });
+
+            $('#form-save-thing').submit(function(){
+                $('.results-container input').each(function() {
+                   this.disabled = 'disabled';
+                });
             });
         });
     </script>

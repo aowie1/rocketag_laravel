@@ -38,6 +38,7 @@ class Tag extends Aware
 		);
 
 		$this->name = Input::get('tag_name');
+		$this->slug = Str::slug($this->name);
 		$this->user_id =	1;//User::current_user_id();
 
 		return $this->save($rules);

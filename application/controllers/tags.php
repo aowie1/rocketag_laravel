@@ -1,9 +1,9 @@
 <?php
 /*
-	|--------------------------------------------------------------------------
-	| The Tags Controller
-	|--------------------------------------------------------------------------
-	*/
+|--------------------------------------------------------------------------
+| The Tags Controller
+|--------------------------------------------------------------------------
+*/
 class Tags_Controller extends Base_Controller
 {
 	public $restful = true;
@@ -70,11 +70,13 @@ class Tags_Controller extends Base_Controller
 
 			$spectrum_value = Input::get('spectrum');
 
+			// Set the spectrum for this tag if found
 			if (isset($spectrum_value)) {
 				$spectrum = new Spectrum;
 				$spectrum->create_spectrum($tag->id);
 			}
 
+			// If the form was submitted via ajax
 			if (Request::ajax()) {
 				return View::make('tags.result')
 					->with('tag', $tag);

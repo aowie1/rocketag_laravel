@@ -1,5 +1,5 @@
 <!-- Reveal Modal -->
-<div id="add-tag-modal" class="reveal-modal expand">
+<div id="add-modal-tag" class="reveal-modal expand">
     <h2>This tag doesn't exist yet. Let's create it!</h2>
 
     @include('tags.addForm')
@@ -9,15 +9,17 @@
     @parent
     <script>
     jQuery(document).ready(function ($) {
-        $('.add-tag-form').submit(function(e){
+        $('#add-modal-tag form').submit(function(e){
+            form = $(this);
+
             // Post and save the tag
             $.ajax({
                 type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
+                url: form.attr('action'),
+                data: form.serialize(),
                 success: function(ret) {
-                    move_to_attached(ret);
-                    add_modal.trigger('reveal:close');
+                    $.fn.move_to_attached($(ret), form.attr('data-type'));
+                    add_modal.foundation('reveal', 'close');
                 }
             });
 

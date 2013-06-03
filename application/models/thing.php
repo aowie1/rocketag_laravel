@@ -10,6 +10,11 @@ class Thing extends Aware
 		return $this->has_many_and_belongs_to('Tag', 'tag_thing');
 	}
 
+	public function links()
+	{
+		return $this->has_many('Link');
+	}
+
 	public static function get_all()
 	{
 		return Thing::order_by('name', 'asc')->get();
@@ -37,6 +42,11 @@ class Thing extends Aware
 			'user_id' => 'required|integer'
 		);
 
+		$messages = array(
+		    'unique' => 'A thing with this name already exists.'
+		);
+
+
 		// Convert the name to a slug
 		$slug = Str::slug(Input::get('thing_name'));
 
@@ -51,10 +61,9 @@ class Thing extends Aware
 
 		$this->name = Input::get('thing_name');
 		$this->slug = $slug;
-		$this->user_id =	1;//User::current_user_id();
+		$this->user_id = 1;//User::current_user_id();
 
-
-		return $this->save($rules);
+		return $this->save($rules, $messages);
 	}
 
 	public static function get_suggestions($text = false, $num = 5)

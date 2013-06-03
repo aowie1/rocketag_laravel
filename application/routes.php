@@ -54,6 +54,9 @@ Route::get('thing/(:any)', 'things@show'); // Display thing
 Route::post('thing', 'things@create'); // Create a thing
 Route::put('thing/(:any)', 'things@update'); // Display thing
 
+// Links
+Route::post('link', 'links@create'); // Add form
+
 // Comments
 Route::get('comments/(:num)', 'comments@index'); // Display comments based on relationship id
 Route::post('comments/(:num)', 'comments@create'); // Create a new comment on a relationship

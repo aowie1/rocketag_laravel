@@ -1,4 +1,4 @@
-<div class="tag radius label left result-item" id="id-{{ $tag->id }}" rel="{{ $tag->id }}">
+<div class="tag radius label left result-item" id="id-{{ $tag->id }}" data-rel="{{ $tag->id }}" data-type="tag">
     {{ $tag->name }}
 
     @if (!empty($tag->pivot->id))
@@ -7,5 +7,7 @@
 
     <span class="attached-remove">x</span>
 
-    {{ Form::hidden('tags[]', $tag->id) }}
+    @if (!Request::ajax())
+        {{ Form::hidden('tags[]', $tag->id) }}
+    @endif
 </div>
