@@ -26,6 +26,7 @@
     @yield('content')
     <div class="desc lt">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, massa sed lacinia volutpat, tellus magna suscipit sapien, vel mattis nisl metus ultrices dolor. Morbi non pharetra enim.</p>
+    <div class="clear"></div>
     </div>
     <div id="top_tags" class="rt">
     <h2>Top Tags</h2>
@@ -37,7 +38,7 @@
     <li><a href="#">elbow-blowing</a></li>
     </ul>
 
-    <div class="clear"></div>
+
     </div>
 
     </div>
