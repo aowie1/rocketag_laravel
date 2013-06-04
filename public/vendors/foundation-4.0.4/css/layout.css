@@ -44,7 +44,7 @@ a:hover {text-decoration: underline;}
 #top_tags{width: 165px; background: #E6E6E6; padding: 5px 10px 10px 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; /* future proofing */ -khtml-border-radius: 10px; /* for old Konqueror browsers */}
 
 #comments{margin-left: 195px; font-size: 11px;}
-#comments h2{background: url(../img/cloud_white.png) no-repeat top left; height: 49px; padding: 35px 0 0 23px; font-size: 20px; color: #555; text-transform: uppercase; margin-top: -64px;}
+#comments h2{background: url(../img/cloud_white.png) no-repeat top left; height: 49px; padding: 35px 0 0 23px; font-size: 20px; color: #555; text-transform: uppercase; margin-top: -64px; margin-bottom: 25px;}
 #comments ul li{background: #E6E6E6; -moz-border-radius: 5px;
 -webkit-border-radius: 5px;
 border-radius: 5px; /* future proofing */
