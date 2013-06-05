@@ -49,7 +49,7 @@
     </div>
 
     <div class="right">
-        <a href="#" class="button js-attacher-button" data-switch-id="link-attacher">Attach link</a>
+        <a href="#link-attacher" class="button js-attacher-button" data-switch-id="link-attacher">Attach link</a>
     </div>
 
     <hr />
