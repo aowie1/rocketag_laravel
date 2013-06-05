@@ -118,14 +118,14 @@ class Base_Schema {
 
 		Schema::create('images', function($table){
 			$table->increments('id');
-			$table->integer('thing_id');
+			$table->integer('thing_id')->unsigned();
 			$table->string('image', 255);
-			$table->integer('user_id');
+			$table->integer('user_id')->nullable()->unsigned();
 			$table->timestamps();
 			$table->integer('relevance');
 
 		    $table->foreign('user_id')->references('id')->on('users')->on_update('cascade')->on_delete('set null');
-			$table->foreign('thing_id')->references('id')->on('thing')->on_update('cascade')->on_delete('cascade');
+			$table->foreign('thing_id')->references('id')->on('things')->on_update('cascade')->on_delete('cascade');
 		});
 
 	}
