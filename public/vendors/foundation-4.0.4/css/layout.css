@@ -55,8 +55,8 @@ border-radius: 5px; /* future proofing */
 #comments p{margin: 5px 0 0 0px;}
 
 
-#sidebar{text-align: right;}
-#sidebar .title{border-bottom: 1px solid #666; color: #666;}
+#sidebar{text-align: right; margin-top: 25px;}
+#sidebar .title{border-bottom: 1px solid #666; color: #666; margin-left: 10px;}
 
 .col-1{width: 195px;}
 .col-2{width: 400px; position: relative;}
