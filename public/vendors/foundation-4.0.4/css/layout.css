@@ -1,5 +1,5 @@
-body{background: #fff url(../img/bg.png) no-repeat center 140px ; color: #555; font-family: Verdana, sans-serif; }
-p{font-size: 12px;}
+body{background: #fff url(../img/bg.png) no-repeat center 140px ; color: #555; font-family: Verdana, sans-serif; font-size: 14px;}
+p{font-size: 14px;}
 *{margin: 0;}
 
 h1, h2, h3, h4, h5, h6, h7 { color: #164d5d; font-family: 'Titillium Web', sans-serif;}
@@ -40,17 +40,19 @@ a:hover {text-decoration: underline;}
 
 
 
-.desc{width: 150px; padding-left: 15px;}
-#top_tags{width: 165px; background: #E6E6E6; padding: 5px 10px 10px 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; /* future proofing */ -khtml-border-radius: 10px; /* for old Konqueror browsers */}
+.desc{width: 220px; padding-left: 15px; margin-bottom: 25px;}
+#top_tags{width: 165px; background: #E6E6E6; padding: 5px 10px 10px 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; /* future proofing */ -khtml-border-radius: 10px; /* for old Konqueror browsers */ margin-bottom: 25px;}
 
-#comments{margin-left: 195px; font-size: 11px;}
-#comments h2{background: url(../img/cloud_white.png) no-repeat top left; height: 49px; padding: 35px 0 0 23px; font-size: 20px; color: #555; text-transform: uppercase; margin-top: -64px; margin-bottom: 25px;}
+#comments{margin-left: 195px; font-size: 12px;}
+#comments h2{background: url(../img/cloud_white.png) no-repeat top left; height: 49px; padding: 35px 0 0 23px; font-size: 20px; color: #555; text-transform: uppercase; margin-top: -64px; margin-bottom: 30px;}
+#comments ul{margin-left: 25px;}
 #comments ul li{background: #E6E6E6; -moz-border-radius: 5px;
 -webkit-border-radius: 5px;
 border-radius: 5px; /* future proofing */
--khtml-border-radius: 5px; /* for old Konqueror browsers */ padding: 5px; margin-bottom: 10px;}
-#comments .id{color: #000; text-decoration: none; font-weight: bold; text-transform: uppercase; }
+-khtml-border-radius: 5px; /* for old Konqueror browsers */ padding: 10px; margin-bottom: 15px;}
+#comments .id{color: #000; text-decoration: none; font-size: 14px; font-weight: bold; text-transform: uppercase; }
 #comments .date{color: #999; font-style: italic;}
+#comments p{margin: 5px 0 0 0px;}
 
 
 #sidebar{text-align: right;}
