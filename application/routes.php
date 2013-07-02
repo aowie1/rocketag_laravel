@@ -53,6 +53,7 @@ Route::get('thing', 'things@index'); // Add form
 Route::get('thing/(:any)', 'things@show'); // Display thing
 Route::post('thing', 'things@create'); // Create a thing
 Route::put('thing/(:any)', 'things@update'); // Display thing
+Route::post('thing/(:any)/link', 'links@create'); // Create and attach a link to a thing
 
 // Links
 Route::post('link', 'links@create'); // Add form

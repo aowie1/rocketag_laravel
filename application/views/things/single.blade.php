@@ -35,7 +35,7 @@
         <div class="alert-box error">{{ $error }}</div>
     @endif
 
-    <div class="panel attached-container">
+    <div id="container-attached-link" class="panel attached-container">
     @forelse ($thing->links as $link)
         @include('links.result')
     @empty

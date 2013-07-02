@@ -14,7 +14,8 @@ class Link extends Aware
     {
         $rules = array(
             'link'  => 'required',
-            'user_id' => 'required|integer'
+            'thing_id' => 'required|integer|exists:things,id',
+            'user_id'   => 'required|integer|exists:users,id'
         );
 
         $this->link = Input::get('link');

@@ -8,9 +8,15 @@ class Links_Controller extends Base_Controller
 {
     public $restful = true;
 
-    public function post_create()
+    public function post_create($thing)
     {
+        if (!$thing = Thing::where_name($thing)->first())
+        {
+            return Response::error('404');
+        }
+
         $link = new Link;
+        $link->thing_id = $thing->id;
 
         if ($link->create_link()) {
 
@@ -25,7 +31,6 @@ class Links_Controller extends Base_Controller
                     ->with('success', $success);
             }
         } else {
-
             // Return to the same page with error messages
             return Redirect::to('/links')
                 ->with_input()
