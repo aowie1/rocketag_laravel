@@ -8,6 +8,30 @@ class Things_Controller extends Base_Controller
 {
 	public $restful = true;
 
+	public $thing;
+
+	public function __construct()
+	{
+		if (!User::is_logged_in())
+		{
+			$this->user_data = User::current_user();
+		}
+
+		// We can always assume the first parameter is a thing id
+		$route = Request::route();
+		if (!empty($route->parameters[0]))
+		{
+			$thing_id = $route->parameters[0];
+
+			if (!$this->thing = Thing::with(array('tags', 'links'))->find($thing_id))
+			{
+				die(Response::error('404'));
+			}
+
+			View::share('thing', $this->thing);
+		}
+	}
+
 	public function get_index()
 	{
 		$old_tags = Input::old('tags');
@@ -26,11 +50,11 @@ class Things_Controller extends Base_Controller
 
 	public function post_create()
 	{
-		$thing = new Thing;
+		$this->thing = new Thing;
 
 		// $tags = Input::get('tags');
 
-		if ($thing->create_thing()) {
+		if ($this->thing->create_thing()) {
 			// if (!empty($tags)) {
 			// 	$tag_ids = array_keys($tags);
 
@@ -44,20 +68,18 @@ class Things_Controller extends Base_Controller
 			$success = 'Your thing was successfully created!';
 
 			// Return to the same page with a success message
-	        return Redirect::to('/thing/'.$thing->slug)
+	        return Redirect::to('/thing/'.$this->thing->id)
 	            ->with('success', $success);
 	    } else {
 	    	// Return to the same page with error messages
 	        return Redirect::to('/thing')
                 ->with_input()
-                ->with_errors($thing->errors);
+                ->with_errors($this->thing->errors);
 	    }
 	}
 
 	public function get_things($thing = false, $limit = 10, $start_spectrum = -10, $end_spectrum = 10, $is_fact = false)
 	{
-		$data['thing_result'] = Thing::get_thing($thing);
-
 		$data['things_result'] = Thing::get_things_by_thing($thing_id, $limit, $start_spectrum, $end_spectrum, $is_fact);
 
 		if (!empty($data['result']))
@@ -66,13 +88,21 @@ class Things_Controller extends Base_Controller
 			echo "No results found";
 	}
 
-	public function get_show($thing_slug)
+	public function get_show()
 	{
-		$thing = Thing::with(array('tags', 'links'))->where_slug($thing_slug)->first();
+		$view = View::make('things.single');
 
-		if (!is_null($thing)) {
-			return View::make('things.single')
-				->with('thing', $thing);
+		if (!empty($this->user_data))
+		{
+			$user_data = new StdClass;
+			$user_data->vote = $this->user->get_vote($this->thing);
+
+			$view->with('user_data', $user_data);
+		}
+
+		if (!is_null($this->thing)) {
+			return $view;
+				
 		} else {
 			return Response::error('404');
 		}
@@ -89,10 +119,8 @@ class Things_Controller extends Base_Controller
 			return View::make('things.suggestions')->with($suggestions);
 	}
 
-	public function put_update($thing_slug)
+	public function put_update($thing_id)
 	{
-		$thing = Thing::where_slug($thing_slug)->first();
-
 		$status_arr = array();
 
 		if (Input::has('tags'))
@@ -105,5 +133,27 @@ class Things_Controller extends Base_Controller
         // Redirect to the edit page with a message that says saving was successful
         return Redirect::to(Request::uri())
             ->with('success', 'Thing saved successfully.');
+	}
+
+	public function post_vote($value)
+	{
+		if ($this->user)
+		{
+			$vote = new Vote;
+			$vote->user_id = $this->user->id;
+			$vote->thing_id = $this->thing->id;
+			$vote->value = (int) $value;
+			$vote->save();
+
+			$this->user->attach($vote);
+
+			return Response::json(array('message', 'Thank you for your vote.'));
+		}
+		else
+		{
+			return Response::json(array('error', 'An error occur while attempting to cast your vote.'));
+		}
+
+		return $view;
 	}
 }

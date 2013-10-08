@@ -13,12 +13,10 @@ class Base_Schema {
 		{
 		    $table->increments('id');
 		    $table->string('name', 50);
-		    $table->string('slug', 50);
 		    $table->timestamps();
 		    $table->integer('user_id')->nullable()->unsigned();
 
 		    $table->unique('name');
-		    $table->unique('slug');
 		    $table->foreign('user_id')->references('id')->on('users')->on_update('cascade')->on_delete('set null');
 		});
 

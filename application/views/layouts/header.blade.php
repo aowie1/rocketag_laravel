@@ -26,6 +26,7 @@
         <ul class="rt top_nav">
             <li><a href="#">Random!</a></li>
             <li><a href="#">My Tagmosphere</a></li>
+            <li><a href="/login">Login</a></li>
         </ul>
     </div>
 

@@ -18,11 +18,11 @@
 
 <script>
     @if (!empty($errors))
-        //display_messages('{{ json_encode($errors) }}', 'error');
+        display_messages('{{ json_encode($errors) }}', 'error');
     @endif
 
     @if (!empty($success))
-        //display_messages('{{ json_encode($success) }}', 'success');
+        display_messages('{{ json_encode($success) }}', 'success');
     @endif
 
     jQuery(document).ready(function ($) {
@@ -38,5 +38,9 @@
 <script src="/js/suggestive.js"></script>
 
 @yield('js')
+
+@if(!empty($user))
+    @include('auth.register.modal')
+@endif
 
 </body>

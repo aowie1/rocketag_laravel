@@ -56,10 +56,13 @@ Route::post('tag', 'tags@create'); // Create a new tag
 
 // Things
 Route::get('thing', 'things@index'); // Add form
-Route::get('thing/(:any)', 'things@show'); // Display thing
+Route::get('thing/(:num)', 'things@show'); // Display thing
 Route::post('thing', 'things@create'); // Create a thing
-Route::put('thing/(:any)', 'things@update'); // Display thing
-Route::post('thing/(:any)/link', 'links@create'); // Create and attach a link to a thing
+Route::put('thing/(:num)', 'things@update'); // Display thing
+Route::post('thing/(:num)/link', 'links@create'); // Create and attach a link to a thing
+
+// Voting
+Route::post('thing/(:num)/vote/(:any)', 'things@vote');
 
 // Links
 Route::post('link', 'links@create'); // Add form

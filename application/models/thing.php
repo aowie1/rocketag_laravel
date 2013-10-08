@@ -15,24 +15,9 @@ class Thing extends Aware
 		return $this->has_many('Link');
 	}
 
-	public static function get_all()
+	public static function votes()
 	{
-		return Thing::order_by('name', 'asc')->get();
-	}
-
-	public static function get_thing($name)
-	{
-		return Thing::where('name', '=', $name)->first();
-	}
-
-	public static function get_things_by_thing()
-	{
-		dd(func_get_args());
-	}
-
-	public function check_slug($slug)
-	{
-		return self::where_slug($slug)->first();
+		return $this->has_many('Vote');
 	}
 
 	public function create_thing()
@@ -46,21 +31,7 @@ class Thing extends Aware
 		    'unique' => 'A thing with this name already exists.'
 		);
 
-
-		// Convert the name to a slug
-		$slug = Str::slug(Input::get('thing_name'));
-
-		// Check to make sure the slug is unique
-		// If not, increment the tail
-		$i = 0;
-		while (!is_null($this->check_slug($slug)))
-		{
-		       $slug = $slug.'-'.$i;
-		       $i++;
-		}
-
 		$this->name = Input::get('thing_name');
-		$this->slug = $slug;
 		$this->user_id = 1;//User::current_user_id();
 
 		return $this->save($rules, $messages);
