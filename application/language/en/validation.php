@@ -44,6 +44,7 @@ return array(
 	"integer"        => "The :attribute must be an integer.",
 	"ip"             => "The :attribute must be a valid IP address.",
 	"match"          => "The :attribute format is invalid.",
+	"password"		 => "The :attribute must contain at least one number, one uppercase letter, one lowercase letter, and one symbol.",
 	"max"            => array(
 		"numeric" => "The :attribute must be less than :max.",
 		"file"    => "The :attribute must be less than :max kilobytes.",

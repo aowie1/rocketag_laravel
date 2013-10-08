@@ -70,4 +70,6 @@ return array(
 
 	'table' => 'users',
 
+	'min_username_length' => 6,
+
 );

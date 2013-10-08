@@ -75,6 +75,16 @@ class User extends Aware
     }
 
     /**
+     * Used to describe the relationship between a User & Votes
+     *
+     * @return relationship
+     */
+    public function votes()
+    {
+        return $this->has_many('Vote');
+    }
+
+    /**
      * Return the currently logged in users id
      *
      * @return integer
@@ -110,23 +120,24 @@ class User extends Aware
      *
      * @return boolean was creation successful
      */
-    public function create_user_and_metadata($email = null, $password = null, $first_name = null, $last_name = null)
+    public function create_user($user_data = null)
     {
-        $this->email = is_null($email) ? Input::get('email') : $email;
-        $this->password = is_null($password) ? Input::get('password') : $password;
-        $this->password_confirmation = is_null($password) ? Input::get('password_confirmation') : $password;
+        $this->username = empty($user_data->username) ? Input::get('username') : $user_data->username;
+        $this->email = empty($user_data->email) ? Input::get('email') : $user_data->email;
+        $this->password = empty($user_data->password) ? Input::get('password') : $user_data->password;
+        $this->password_confirmation = empty($user_data->password) ? Input::get('password_confirmation') : $user_data->password;
 
         $metadata = new User_Metadata();
-        $metadata->first_name = is_null($first_name) ? Input::get('first_name') : $first_name;
-        $metadata->last_name = is_null($last_name) ? Input::get('last_name') : $last_name;
+        $metadata->first_name = empty($first_name) ? Input::get('first_name') : $first_name;
+        $metadata->last_name = empty($last_name) ? Input::get('last_name') : $last_name;
 
         $rules = array(
-            'email'            => 'required|email',
-            'password'        => 'required|confirmed|min:'.PASSWORD_MIN_LENGTH
+            'email'            => 'required|email|unique:users,email',
+            'password'        => 'required|confirmed|password:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).+$/|min:'.Config::get('password_min_length'),
         );
 
         $user_valid = $this->valid($rules);
-        $metadata_valid = $metadata->valid();
+        $metadata_valid = TRUE; //$metadata->valid($rules);
 
         if ($user_valid === false || $metadata_valid === false)
         {
@@ -137,16 +148,17 @@ class User extends Aware
         else
         {
             // Use Sentry to create the user so that our password is hashed properly
-            $user_id = Sentry::user()->create(array(
-                'email'        => $this->email,
-                'password'    => $this->password,
-                'metadata'    => array(
-                    'first_name'    => $metadata->first_name,
-                    'last_name'        => $metadata->last_name
-                )
-            ));
+            $user_data = Sentry::user()->create(array(
+                'username'  => $this->username,
+                'email'     => $this->email,
+                'password'  => $this->password,
+                // 'metadata'    => array(
+                //     'first_name'    => $metadata->first_name,
+                //     'last_name'     => $metadata->last_name
+                // )
+            ), Config::get('sentry.activation'));
 
-            $this->user_id = $user_id;
+            $this->user_data = $user_data;
 
             return true;
         }
@@ -167,7 +179,7 @@ class User extends Aware
 
         $rules = array(
             'email'            => 'required|email',
-            'password'        => 'confirmed|min:'.PASSWORD_MIN_LENGTH
+            'password'        => 'confirmed|min:'.Config::get('password_min_length')
         );
 
         $user_valid = $this->valid($rules);
@@ -240,23 +252,16 @@ class User extends Aware
         try
         {
             $valid_login = Sentry::login(Input::get('username'), Input::get('password'), Input::get('remember'));
-            if ($valid_login)
-            {
-                // the user is now logged in - do your own logic
-                return $data = array('success' => TRUE);
-            }
-            else
-            {
-                // could not log the user in - do your bad login logic
-                return $data = array('success' => FALSE, 'sentry' => 'Username/Password incorrect');
-            }
+
+            return ($valid_login)
+                ?: $data = array('errors' => __('auth.login.failed'));
         }
         catch (Sentry\SentryException $e)
         {
             // issue logging in via Sentry - lets catch the sentry error thrown
             // store/set and display caught exceptions such as a suspended user with limit attempts feature.
             $errors = $e->getMessage();
-            return $data = array('success' => FALSE, 'sentry' => $errors);
+            return $data = array('errors' => $errors);
         }
     }
 

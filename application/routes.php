@@ -37,6 +37,12 @@ Route::get('/', function()
 	return View::make('home.index');
 });
 
+// Auth
+Route::get('login', array('before' => 'auth', 'uses' => 'auth@login'));
+Route::post('login', array('before' => 'auth|csrf', 'uses' => 'auth@login'));
+Route::get('register', array('before' => 'auth', 'uses' => 'auth@register'));
+Route::post('register', array('before' => 'auth', 'uses' => 'auth@register'));
+
 // Tags
 Route::get('tag', 'tags@index'); // Add form
 Route::get('tag/(:any)', 'tags@show'); // Display Tag
@@ -132,5 +138,20 @@ Route::filter('csrf', function()
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::to('login');
+    // If the user is already logged in, redirect to homepage
+    if (User::current_user())
+    {
+        return Redirect::to('/');
+    }
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| View Composers
+|--------------------------------------------------------------------------
+*/
+View::composer('auth.register.form', function($view)
+{
+    View::share('user_count', User::count());
 });
