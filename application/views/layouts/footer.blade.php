@@ -37,7 +37,8 @@
 
 <script src="/js/suggestive.js"></script>
 
-@yield('js')
+@section('js')
+@yield_section
 
 @if(!empty($user))
     @include('auth.register.modal')
