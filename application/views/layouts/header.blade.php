@@ -26,7 +26,11 @@
         <ul class="rt top_nav">
             <li><a href="#">Random!</a></li>
             <li><a href="#">My Tagmosphere</a></li>
-            <li><a href="/login">Login</a></li>
+            @if (User::is_logged_in())
+                <li>Hi there, {{ $user->metadata->first_name }}! | <a href="/logout">Logout</a></li>
+            @else
+                <li><a href="/login">Login</a></li>
+            @endif
         </ul>
     </div>
 
@@ -45,6 +49,6 @@
                 <input type="submit" name="search_btn" value="Search" />
             </form>
         </div>
-
+        <div id="js-msg-success"></div>
         <div class="clear"></div>
     </div><!--end header -->

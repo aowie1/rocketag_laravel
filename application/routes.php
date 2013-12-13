@@ -40,6 +40,7 @@ Route::get('/', function()
 // Auth
 Route::get('login', array('before' => 'auth', 'uses' => 'auth@login'));
 Route::post('login', array('before' => 'auth|csrf', 'uses' => 'auth@login'));
+Route::get('logout', function(){ return User::logout(); });
 Route::get('register', array('before' => 'auth', 'uses' => 'auth@register'));
 Route::post('register', array('before' => 'auth', 'uses' => 'auth@register'));
 
@@ -127,11 +128,21 @@ Event::listen('500', function()
 Route::filter('before', function()
 {
 	// Do stuff before every request to your application...
+    if ($success = Session::get('success'))
+    {
+        View::share('success', $success);
+    }
+
+    if ($user = User::current_user())
+    {
+        View::share('user', $user);
+    }
 });
 
 Route::filter('after', function($response)
 {
 	// Do stuff after every request to your application...
+    // dd($response); 
 });
 
 Route::filter('csrf', function()

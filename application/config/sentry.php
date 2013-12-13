@@ -208,6 +208,6 @@ return array(
 
 	),
 
-	'activation' => TRUE,
+	'activation' => false,
 	'password_min_length' => 8,
 );

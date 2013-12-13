@@ -43,7 +43,7 @@ return array(
 	|
 	*/
 
-	'log' => false,
+	'log' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ return array(
 	*/
 
 	'logger' => function($exception)
-	{
+	{	
 		Log::exception($exception);
 	},
 

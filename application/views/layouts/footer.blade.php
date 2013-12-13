@@ -17,12 +17,12 @@
 @yield('modal')
 
 <script>
-    @if (!empty($errors))
-        display_messages('{{ json_encode($errors) }}', 'error');
+    @if (!empty($errors->messages))
+        display_messages('{{ json_encode($errors->messages) }}', 'error');
     @endif
 
     @if (!empty($success))
-        display_messages('{{ json_encode($success) }}', 'success');
+        display_messages('{{ $success }}', 'success');
     @endif
 
     jQuery(document).ready(function ($) {
@@ -39,9 +39,5 @@
 
 @section('js')
 @yield_section
-
-@if(!empty($user))
-    @include('auth.register.modal')
-@endif
 
 </body>

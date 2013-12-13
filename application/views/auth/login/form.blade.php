@@ -1,7 +1,19 @@
 <div class="form-auth login">
     {{ Form::open() }}
+        {{ Form::token() }}
+
+        @if (!empty($errors->messages))
+            @if (is_array($errors->messages))
+                @foreach ($errors->messages as $error)
+                    <p class="error">{{ $error }}</p>
+                @endforeach
+            @else
+                <p class="error">{{ $errors->messages }}</p>
+            @endif
+        @endif
+        
         {{ Form::label('username', 'Username or Email') }}
-        {{ Form::text('username') }} <div class="icon-validate-username invalid"></div>
+        {{ Form::text('username', Input::old('username')) }} <div class="icon-validate-username invalid"></div>
         <div class="msg-errors-username hidden"></div>
 
         {{ Form::label('password', 'Password') }}

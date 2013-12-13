@@ -251,18 +251,23 @@ class User extends Aware
     {
         try
         {
-            $valid_login = Sentry::login(Input::get('username'), Input::get('password'), Input::get('remember'));
-
-            return ($valid_login)
-                ?: $data = array('errors' => __('auth.login.failed'));
+            if (!$valid_login = Sentry::login(Input::get('username'), Input::get('password'), Input::get('remember')))
+            {
+                throw new SentryException(__('auth.login.failed'));
+            }
         }
         catch (Sentry\SentryException $e)
         {
             // issue logging in via Sentry - lets catch the sentry error thrown
             // store/set and display caught exceptions such as a suspended user with limit attempts feature.
-            $errors = $e->getMessage();
+
+            $errors = new Laravel\Messages;
+            $errors->messages = $e->getMessage();            
+
             return $data = array('errors' => $errors);
         }
+
+        return true;
     }
 
     /**
@@ -341,7 +346,7 @@ class User extends Aware
     public static function logout()
     {
         Sentry::logout();
-        return Redirect::to('login')->with('logout', 'You are now logged out!');
+        return Redirect::to('login')->with('success', 'You are now logged out!');
     }
 
     /**

@@ -20,14 +20,14 @@ class Auth_Controller extends Controller {
     {
         $login = User::try_login();
 
-        if (empty($login['errors']))
+        if (!empty($login['errors']))
         {
-            return Redirect::to('/')->with('success', 'You have logged in successfully!');
+            return Redirect::to('/login')
+                ->with_input()
+                ->with_errors($login['errors']);
         }
-        else
-        {
-            return Redirect::to('/login')->with('errors', $login);
-        }
+
+        return Redirect::to('/')->with('success', 'You have logged in successfully!');
     }
 
     public function get_register()
@@ -45,7 +45,7 @@ class Auth_Controller extends Controller {
         }
         else
         {
-            return Redirect::to('/register')->with('errors', $user->errors);
+            return Redirect::to('/register')->with_errors($user->errors);
         }
     }
 }
