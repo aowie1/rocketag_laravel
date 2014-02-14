@@ -43,12 +43,9 @@
         <div id ="logo" class="lt">
             <a href="index.html"><img src='/foundation/images/foundation/orbit/logo.png' alt="Rocketshag's Awesome Logo" /></a>
         </div>
-        <div id="search_bar" class="lt">
-            <form method="get" action="search">
-                <input type="text" name="search_bar" alt="Search" value="" maxlength="256" size="32" />
-                <input type="submit" name="search_btn" value="Search" />
-            </form>
-        </div>
+        
+        @include('search.form')
+
         <div id="js-msg-success"></div>
         <div class="clear"></div>
     </div><!--end header -->

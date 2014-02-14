@@ -53,6 +53,8 @@ Route::post('tag', 'tags@create'); // Create a new tag
 
 // tags/{thing}/{num}/{start_spectrum}/{end_spectrum}
 // Route::get('tags/(:any?)/(:any?)/(:any?)/(:any?)/(:any?).*', 'tags@tags');
+// 
+Route::get('search', 'search@index');
 
 
 // Things

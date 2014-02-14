@@ -44,4 +44,16 @@ class Thing extends Aware
 		else
 			return false;
 	}
+
+	public static function search($limit = 5, $paginate = false)
+	{
+		$query = static::where('name', 'LIKE', '%'.$search_str.'%');
+
+		if (!empty($limit))
+		{
+			$query->take($limit);
+		}
+
+		$query->get();
+	}
 }
