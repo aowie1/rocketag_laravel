@@ -45,7 +45,9 @@ class Auth_Controller extends Controller {
         }
         else
         {
-            return Redirect::to('/register')->with_errors($user->errors);
+            return Redirect::to('/register')
+                ->with_errors($user->errors)
+                ->with_input();
         }
     }
 }
