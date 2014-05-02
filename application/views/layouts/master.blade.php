@@ -22,19 +22,7 @@
 
                 @yield('content')
 
-                <div class="desc lt">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, massa sed lacinia volutpat, tellus magna suscipit sapien, vel mattis nisl metus ultrices dolor. Morbi non pharetra enim.</p>
-                </div>
-
-                <div id="top_tags" class="rt">
-                    <h2>Top Tags</h2>
-                    <ul>
-                        <li><a href="#">epic</a></li>
-                        <li><a href="#">shittay</a></li>
-                        <li><a href="#">trippy</a></li>
-                        <li><a href="#">elbow-blowing</a></li>
-                    </ul>
-                </div>
+                @include('tags.top_tags')
                 <div class="clear"></div>
             </div>
 

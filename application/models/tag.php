@@ -56,4 +56,17 @@ class Tag extends Aware
 
 		return $this->save($rules);
 	}
+
+	public static function top_tags($num = 5)
+	{
+		// SELECT tag_id, COUNT(*) as tag_count FROM tag_thing GROUP BY tag_id ORDER BY tag_id 
+		// return static::things()->order_by('')->take($num)->get();
+	}
+
+	public function get_internal_link()
+	{
+		dd($this);
+
+		return '';
+	}
 }
