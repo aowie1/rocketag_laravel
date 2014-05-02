@@ -42,7 +42,7 @@
     </div>
     <div class="clear"></div>
     </div>
-    <div id="rocket"></div>
+    <!--<div id="rocket"></div> -->
     </div>
 
     <div class="rt col-3">
@@ -51,20 +51,6 @@
     <div id="thing_images_inside">
 
     </div>
-
-    </div>
-
-    <div id="sidebar" class="rt col-3">
-    <h2 class="title">Other Stuff</h2>
-
-    <ul>
-    <li><a href="#">Privacy Policy</a></li>
-    <li><a href="#">User Agreement</a></li>
-    <li><a href="#">Careers</a></li>
-    <li><a href="#">Mobile App</a></li>
-    <li><a href="#">Api</a></li>
-    </ul>
-
 
     </div>
     </div>
@@ -82,7 +68,19 @@
     </ul>
     </div>
 
-    
+    <div id="sidebar" class="rt col-3">
+    <h2 class="title">Other Stuff</h2>
+
+    <ul>
+    <li><a href="#">Privacy Policy</a></li>
+    <li><a href="#">User Agreement</a></li>
+    <li><a href="#">Careers</a></li>
+    <li><a href="#">Mobile App</a></li>
+    <li><a href="#">Api</a></li>
+    </ul>
+
+
+    </div>
 
     </div>
 
