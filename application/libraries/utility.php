@@ -39,4 +39,39 @@ class Utility
             $object->tags()->detach($detach);
         }
     }
+
+    public static function errors($fields = array(), $errors = null)
+    {
+        if (is_null($errors))
+        {
+            $raw_errors = Session::get('errors');
+            if (!empty($raw_errors))
+            {
+                $errors = $raw_errors->messages; 
+            }
+        }
+
+        if (empty($errors))
+        {
+            return false;
+        }
+
+        if (!is_array($fields))
+        {
+            $fields = array($fields);
+        }
+
+        $output = array();
+        foreach ($fields as $field)
+        {
+            if (!empty($errors[$field]))
+            {
+                $output = array_merge($output, $errors[$field]);
+            }
+        }        
+
+        return !empty($output) 
+            ? '<ul class="errors"><li>'.implode('</li><li>', $output).'</li></ul>'
+            : false;
+    }
 }

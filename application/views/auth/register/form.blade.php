@@ -6,16 +6,19 @@
 
     {{ Form::open() }}
         {{ Form::label('username', 'Username') }}
-        {{ Form::text('username') }}
+        {{ Form::text('username', Input::old('username')) }}
+        {{ Utility::errors('username') }}
 
         {{ Form::label('email', 'Email') }}
-        {{ Form::text('email') }}
+        {{ Form::text('email', Input::old('email')) }}
+        {{ Utility::errors('email') }}
 
         {{ Form::label('password', 'Password') }}
         <em>Must contain at least 1 number, 1 capital letter, and 1 symbol.</em>
         {{ Form::password('password') }}
 
         {{ Form::password('password_confirmation') }}
+        {{ Utility::errors(array('password', 'password_confirmation')) }}
 
         {{-- Captcha --}}
 

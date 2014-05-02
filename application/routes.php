@@ -171,3 +171,8 @@ View::composer('auth.register.form', function($view)
 {
     View::share('user_count', User::count());
 });
+
+View::composer('tags.top_tags', function($view)
+{
+    View::share('tags', Tag::top_tags());
+});

@@ -8,7 +8,6 @@
 
     <div id="tags">
         <h3>Tags</h3>
-        @include('success_handler')
 
         <div id="container-attached-tag" class="panel container-attached" data-type="tag">
         @forelse ($thing->tags as $tag)
@@ -32,12 +31,6 @@
 
     <div id="links">
         <h3>Links</h3>
-        @if (!empty($success))
-            <div class="alert-box success">{{ $success }}</div>
-        @endif
-        @if (!empty($error))
-            <div class="alert-box error">{{ $error }}</div>
-        @endif
 
         <div id="container-attached-link" class="panel attached-container">
         @forelse ($thing->links as $link)
@@ -58,8 +51,6 @@
     </div>
 
     <hr />
-
-    @include('errors_handler')
 
     {{ Form::submit('Save', array('class' => 'button')) }}
 
