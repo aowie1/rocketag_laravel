@@ -56,4 +56,17 @@ class Thing extends Aware
 
 		$query->get();
 	}
+
+	public function attach_tags($tag_ids = array())
+	{
+		if (!is_array($tag_ids))
+		{
+			$tag_ids = array($tag_ids);
+		}
+
+		$this->tags()->sync($tag_ids);
+
+		// Increment the tag's active_count
+		$tags = Tag::where_in('id', $tag_ids)->update(array('active_count' => DB::raw('active_count+1')));
+	}
 }

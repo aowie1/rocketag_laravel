@@ -6,9 +6,8 @@
     </div>
 </div>
 
-@section('js')
-	<script>
-	jQuery(document).ready(function ($) {
+@section('dom-ready')
+	@parent
 		$('.js-btn-vote').on('click', function(e){
 			@if(!empty($user))
 				// Display the register modal if an anonymous user attempts a vote
@@ -27,7 +26,5 @@
 	                }
 	            });
 			@endif
-		});	
-	});
-	</script>
+		});
 @endsection

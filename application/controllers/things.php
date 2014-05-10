@@ -119,15 +119,20 @@ class Things_Controller extends Base_Controller
 			return View::make('things.suggestions')->with($suggestions);
 	}
 
-	public function put_update($thing_id)
+	public function put_update($thing_id = null)
 	{
+		if (empty($thing_id) || !$thing = Thing::find($thing_id))
+		{
+			return Response::error('404');
+		}
+
 		$status_arr = array();
 
 		if (Input::has('tags'))
 		{
 			$tag_ids = Input::get('tags');
 
-			$thing->tags()->sync($tag_ids);
+			$thing->attach_tags($tag_ids);
 		}
 
         // Redirect to the edit page with a message that says saving was successful

@@ -58,30 +58,30 @@
 @endsection
 
 @section('js')
-    <script>
-        jQuery(document).ready(function ($) {
-            $('.js-attacher-button').on('click', function(){
-                $(this).parent().hide();
+    <script src="/js/suggestive.js"></script>
+@endsection
 
-                original = $(this).parent();
-                switch_to = $(this).attr('data-switch-id');
-                switch_to_el = $('#' + switch_to);
+@section('dom-ready')
+    $('.js-attacher-button').on('click', function(){
+        $(this).parent().hide();
 
-                switch_to_el.show('fast', function(){
-                    $('.switch-back').on('click', function(){
-                        switch_to_el.hide();
-                        original.show();
-                    });
-                });
+        original = $(this).parent();
+        switch_to = $(this).data('switch-id');
+        switch_to_el = $('#' + switch_to);
 
-                return true;
-            });
-
-            $('#form-save-thing').submit(function(){
-                $('.results-container input').each(function() {
-                   this.disabled = 'disabled';
-                });
+        switch_to_el.show('fast', function(){
+            $('.switch-back').on('click', function(){
+                switch_to_el.hide();
+                original.show();
             });
         });
-    </script>
+
+        return true;
+    });
+
+    $('#form-save-thing').submit(function(){
+        $('.results-container input').each(function() {
+           this.disabled = 'disabled';
+        });
+    });
 @endsection
