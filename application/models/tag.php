@@ -62,6 +62,11 @@ class Tag extends Aware
 		return Tag::order_by('active_count', 'desc')->where('active_count', '>', 0)->take($num)->get();
 	}
 
+	public function top_things($num = 10)
+	{
+		return $this->things()->order_by('votes', 'desc')->take($num)->get();
+	}
+
 	public function get_internal_link()
 	{
 		return '/tag/'.$this->id;

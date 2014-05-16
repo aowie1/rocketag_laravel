@@ -14,6 +14,20 @@ class Tags_Controller extends Base_Controller
 		return View::make('tags.add');
 	}
 
+	public function get_show($tag_id = null)
+	{
+		if (empty($tag_id) || !$tag = Tag::find($tag_id))
+		{
+			return Response::error('404');
+		}
+
+		$top_things = View::make('things.top', array('things' => $tag->top_things()));
+
+		return View::make('tags.single')
+			->with('tag', $tag)
+			->with('top_things_widget', $top_things);
+	}
+
 	public function get_tags($thing = false, $limit = 10, $start_spectrum = -10, $end_spectrum = 10, $is_fact = false)
 	{
 		if (!empty($thing))

@@ -46,7 +46,7 @@ Route::post('register', array('before' => 'auth', 'uses' => 'auth@register'));
 
 // Tags
 Route::get('tag', 'tags@index'); // Add form
-Route::get('tag/(:any)', 'tags@show'); // Display Tag
+Route::get('tag/(:num)', 'tags@show'); // Display Tag
 Route::post('tag/suggestions', 'tags@suggestions'); // Get suggestions based on string (optional: exclude filter)
 Route::post('tag', 'tags@create'); // Create a new tag
 // Route::get('tag/attach/(:num)', 'tags@attach');
