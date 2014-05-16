@@ -37,7 +37,6 @@
 
                 @yield('content')
 
-                @include('tags.top_tags')
                 <div class="clear"></div>
             </div>
 

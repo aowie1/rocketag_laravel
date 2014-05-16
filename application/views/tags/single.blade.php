@@ -2,7 +2,7 @@
 
 @section('content')
 
-This is tag: {{ $tag->name }}
+    This is tag: {{ $tag->name }}
 
-{{ $top_things_widget }}
+    {{ $top_things_widget }}
 @endsection
